@@ -6,7 +6,25 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Send TTS Message",
+name: "Repeat String",
+
+//---------------------------------------------------------------------
+// DBM Mods Manager Variables (Optional but nice to have!)
+//
+// These are variables that DBM Mods Manager uses to show information
+// about the mods for people to see in the list.
+//---------------------------------------------------------------------
+
+    // Who made the mod (If not set, defaults to "DBM Mods")
+    author: "Armağan",
+
+    // The version of the mod (Defaults to 1.0.0)
+    version: "1.0.0", //Added in 1.8.7
+
+    // A short description to show on the mod line for this mod (Must be on a single line)
+    short_description: "Allows you to repeat text you want as much want.",
+
+    // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +32,7 @@ name: "Send TTS Message",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Messaging",
+section: "Other Stuff",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,8 +41,7 @@ section: "Messaging",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const channels = ['Same Channel', 'Command Author', 'Mentioned User', 'Mentioned Channel', 'Default Channel', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	return `${channels[parseInt(data.channel)]}: "${data.message.replace(/[\n\r]+/, '')}"`;
+	return `${data.xtimes || "0"}x "${data.girdi || "None"}"`;
 },
 
 //---------------------------------------------------------------------
@@ -36,7 +53,7 @@ subtitle: function(data) {
 variableStorage: function(data, varType) {
 	const type = parseInt(data.storage);
 	if(type !== varType) return;
-	return ([data.varName2, 'Message']);
+	return ([data.varName, 'Text']);
 },
 
 //---------------------------------------------------------------------
@@ -47,54 +64,62 @@ variableStorage: function(data, varType) {
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["channel", "varName", "message", "storage", "varName2"],
+fields: ["storage", "varName", "girdi", "xtimes"],
 
 //---------------------------------------------------------------------
 // Command HTML
 //
 // This function returns a string containing the HTML used for
-// editting actions. 
+// editting actions.
 //
 // The "isEvent" parameter will be true if this action is being used
-// for an event. Due to their nature, events lack certain information, 
+// for an event. Due to their nature, events lack certain information,
 // so edit the HTML to reflect this.
 //
-// The "data" parameter stores constants for select elements to use. 
+// The "data" parameter stores constants for select elements to use.
 // Each is an array: index 0 for commands, index 1 for events.
-// The names are: sendTargets, members, roles, channels, 
+// The names are: sendTargets, members, roles, channels,
 //                messages, servers, variables
 //---------------------------------------------------------------------
 
 html: function(isEvent, data) {
 	return `
 <div>
-	<div style="float: left; width: 35%;">
-		Send To:<br>
-		<select id="channel" class="round" onchange="glob.sendTargetChange(this, 'varNameContainer')">
-			${data.sendTargets[isEvent ? 1 : 0]}
-		</select>
+  <div>
+  <u>Mod Info:</u><br>Created by Armağan!
+  </div>
+
+<br>
+ <div>
+	<div>
+		String:<br>
+		<input placeholder="String or varible" id="girdi" class="round" type="text">
 	</div>
-	<div id="varNameContainer" style="display: none; float: right; width: 60%;">
-		Variable Name:<br>
-		<input id="varName" class="round" type="text" list="variableList"><br>
+
+	<br>
+
+	<div>
+		Times:<br>
+		<input placeholder="Number or varible" id="xtimes" class="round" type="text">
 	</div>
-</div><br><br><br>
-<div style="padding-top: 8px;">
-	Message:<br>
-	<textarea id="message" rows="9" placeholder="Insert message here..." style="width: 99%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
-</div><br>
-<div>
-	<div style="float: left; width: 35%;">
-		Store In:<br>
-		<select id="storage" class="round" onchange="glob.variableChange(this, 'varNameContainer2')">
-			${data.variables[0]}
-		</select>
-	</div>
-	<div id="varNameContainer2" style="display: none; float: right; width: 60%;">
-		Variable Name:<br>
-		<input id="varName2" class="round" type="text">
-	</div>
-</div>`;
+ </div>
+
+	<br>
+
+    <div>
+		<div style="float: left; width: 35%;">
+			Store In:<br>
+			<select id="storage" class="round">
+				${data.variables[1]}
+			</select>
+		</div>
+		<div id="varNameContainer" style="float: right; width: 60%;">
+			Variable Name:<br>
+			<input id="varName" class="round" type="text">
+		</div>
+	 </div>
+
+	</div>`
 },
 
 //---------------------------------------------------------------------
@@ -106,46 +131,35 @@ html: function(isEvent, data) {
 //---------------------------------------------------------------------
 
 init: function() {
-	const {glob, document} = this;
-
-	glob.sendTargetChange(document.getElementById('channel'), 'varNameContainer');
-	glob.variableChange(document.getElementById('storage'), 'varNameContainer2');
 },
 
 //---------------------------------------------------------------------
 // Action Bot Function
 //
 // This is the function for the action within the Bot's Action class.
-// Keep in mind event calls won't have access to the "msg" parameter, 
+// Keep in mind event calls won't have access to the "msg" parameter,
 // so be sure to provide checks for variable existance.
 //---------------------------------------------------------------------
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
-	const server = cache.server;
-	const msg = cache.msg;
-	const channel = parseInt(data.channel);
-	const message = data.message;
-	if(channel === undefined || message === undefined) return;
+	const type = parseInt(data.storage);
 	const varName = this.evalMessage(data.varName, cache);
-	const target = this.getSendTarget(channel, varName, cache);
-	if(Array.isArray(target)) {
-		this.callListFunc(target, 'send', [this.evalMessage(message, cache), {tts: true}]).then(function(resultMsg) {
-			const varName2 = this.evalMessage(data.varName2, cache);
-			const storage = parseInt(data.storage);
-			this.storeValue(resultMsg, storage, varName2, cache);
-			this.callNextAction(cache);
-		}.bind(this));
-	} else if(target && target.send) {
-		target.send(this.evalMessage(message, cache), {tts: true}).then(function(resultMsg) {
-			const varName2 = this.evalMessage(data.varName2, cache);
-			const storage = parseInt(data.storage);
-			this.storeValue(resultMsg, storage, varName2, cache);
-			this.callNextAction(cache);
-		}.bind(this)).catch(this.displayError.bind(this, data, cache));
-	} else {
-		this.callNextAction(cache);
-	}
+	const girdi = this.evalMessage(data.girdi, cache);
+	const xtimes = this.evalMessage(data.xtimes, cache);
+	const storage = this.getVariable(type, varName, cache);
+
+
+	var _this = this;
+	const WrexMODS = _this.getWrexMods();
+	WrexMODS.CheckAndInstallNodeModule('repeat-string');
+	const search = WrexMODS.require('repeat-string');
+
+
+	var repeat = require('repeat-string');
+	var val = repeat(girdi, xtimes);
+	this.storeValue(val, type, varName, cache);
+	this.callNextAction(cache);
 },
 
 //---------------------------------------------------------------------

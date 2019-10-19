@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Loop Queue",
+name: "Flip Text",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Loop Queue",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Audio Control",
+section: "Other Stuff",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,31 +23,39 @@ section: "Audio Control",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const actions = ["Loop Whole Queue", "Loop Current Item"];
-	return `${actions[parseInt(data.loop)]}`;
+	return data.split;
 },
 
 //---------------------------------------------------------------------
-// DBM Mods Manager Variables (Optional but nice to have!)
+	// DBM Mods Manager Variables (Optional but nice to have!)
+	//
+	// These are variables that DBM Mods Manager uses to show information
+	// about the mods for people to see in the list.
+	//---------------------------------------------------------------------
+
+	// Who made the mod (If not set, defaults to "DBM Mods")
+	author: "Jasper",
+
+	// The version of the mod (Defaults to 1.0.0)
+	version: "1.9", //Added in 1.9
+
+	// A short description to show on the mod line for this mod (Must be on a single line)
+	short_description: "Flip any text!",
+
+	// If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
+
+//---------------------------------------------------------------------
+// Action Storage Function
 //
-// These are variables that DBM Mods Manager uses to show information
-// about the mods for people to see in the list.
+// Stores the relevant variable info for the editor.
 //---------------------------------------------------------------------
 
-// Who made the mod (If not set, defaults to "DBM Mods")
-author: "ZockerNico",
-
-// The version of the mod (Defaults to 1.0.0)
-version: "1.9.5", //Added in 1.9.5
-
-// A short description to show on the mod line for this mod (Must be on a single line)
-short_description: "This action will loop the queue or the current item.",
-
-// If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
-
-
-//---------------------------------------------------------------------
-
+variableStorage: function(data, varType) {
+	const type = parseInt(data.storage);
+	if(type !== varType) return;
+	let dataType = 'Text';
+	return ([data.varName, dataType]);
+},
 //---------------------------------------------------------------------
 // Action Fields
 //
@@ -56,50 +64,47 @@ short_description: "This action will loop the queue or the current item.",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["status", "loop"],
+fields: ["split", "storage", "varName"],
 
 //---------------------------------------------------------------------
 // Command HTML
 //
 // This function returns a string containing the HTML used for
-// editting actions. 
+// editting actions.
 //
 // The "isEvent" parameter will be true if this action is being used
-// for an event. Due to their nature, events lack certain information, 
+// for an event. Due to their nature, events lack certain information,
 // so edit the HTML to reflect this.
 //
-// The "data" parameter stores constants for select elements to use. 
+// The "data" parameter stores constants for select elements to use.
 // Each is an array: index 0 for commands, index 1 for events.
-// The names are: sendTargets, members, roles, channels, 
+// The names are: sendTargets, members, roles, channels,
 //                messages, servers, variables
 //---------------------------------------------------------------------
 
 html: function(isEvent, data) {
 	return `
-<div>
+<div id ="wrexdiv" style="width: 550px; height: 350px; overflow-y: scroll;">
+<div id="modinfo">
 	<p>
-		Made by ZockerNico.<br>
-	</p>
-</div>
-<div style="float: left; width: 45%; padding-top: 8px;">
-	Loop Setting:<br>
-	<select id="status" class="round" onchange="glob.onChange(this)">
-		<option value="0" selected>Enable</option>
-		<option value="1">Disable</option>
-	</select>
-</div>
-<div style="float: right; width: 50%; padding-top: 8px;">
-	Loop Operation:<br>
-	<select id="loop" class="round">
-		<option value="0" selected>Loop Whole Queue</option>
-		<option value="1">Loop Current Item</option>
-	</select><br>
-</div>
-<div style="float: left; width: 100%; padding-top: 8px;">
-	<p>
-		Please put the Welcome action into a Bot Initalization event to be able to store the current song!
-	</p>
-</div>`;
+	   <u>Mod Info:</u><br>
+Made by Jasper<br>
+	</p></div><br>
+	<div padding-top: 8px;">
+		Text To Flip:<br>
+		<textarea id="split" rows="2" placeholder="Insert text here..." style="width: 99%; font-family: monospace; white-space: nowrap; resize: none;"></textarea>
+</div><br>
+	<div style="float: left; width: 35%;">
+		Store In:<br>
+		<select id="storage" class="round">
+			${data.variables[1]}
+		</select>
+	</div>
+	<div id="varNameContainer" style="float: right; width: 60%;">
+		Variable Name:<br>
+		<input id="varName" class="round" type="text"><br>
+	</div>
+</div>`
 },
 
 //---------------------------------------------------------------------
@@ -111,47 +116,33 @@ html: function(isEvent, data) {
 //---------------------------------------------------------------------
 
 init: function() {
+	const {glob, document} = this;
+
+	glob.variableChange(document.getElementById('storage'), 'varNameContainer');
 },
 
 //---------------------------------------------------------------------
 // Action Bot Function
 //
 // This is the function for the action within the Bot's Action class.
-// Keep in mind event calls won't have access to the "msg" parameter, 
+// Keep in mind event calls won't have access to the "msg" parameter,
 // so be sure to provide checks for variable existance.
 //---------------------------------------------------------------------
 
 action: function(cache) {
-	const data = cache.actions[cache.index];
-	const Audio = this.getDBM().Audio;
-	const server = cache.server;
-	const status = parseInt(data.status);
-	const loop = parseInt(data.loop);
 
-	switch(status) {
-		case 0://Enable
-			switch(loop) {
-				case 0://Loop Queue
-					Audio.loopQueue[server.id] = true;
-					break;
-				case 1://Loop Item
-					Audio.loopItem[server.id] = true;
-					break;
-			};
-			break;
-		case 1://Disable
-			switch(loop) {
-				case 0://Loop Queue
-					Audio.loopQueue[server.id] = false;
-					break;
-				case 1://Loop Item
-					Audio.loopItem[server.id] = false;
-					break;
-			};
-			break;
-	};
-	
-	this.callNextAction(cache);
+    const data = cache.actions[cache.index];
+    const fliptext = this.evalMessage(data.split, cache);
+    if(!fliptext) {
+      console.log("There is no text to flip, please check your action Flip Text");
+      this.callNextAction(cache);
+    }
+    const flip = require('flip-text');
+    const result = flip(fliptext);
+    const storage = parseInt(data.storage);
+    const varName = this.evalMessage(data.varName, cache);
+    this.storeValue(result, storage, varName, cache);
+    this.callNextAction(cache);
 },
 
 //---------------------------------------------------------------------
@@ -164,7 +155,6 @@ action: function(cache) {
 //---------------------------------------------------------------------
 
 mod: function(DBM) {
-	//Everything that is needed to run this mod is placed in the Welcome action of DBM Mods.
 }
 
 }; // End of module

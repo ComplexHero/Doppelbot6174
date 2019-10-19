@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Loop Queue",
+name: "Check If Item In List",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Loop Queue",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Audio Control",
+section: "Conditions",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,30 +23,30 @@ section: "Audio Control",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const actions = ["Loop Whole Queue", "Loop Current Item"];
-	return `${actions[parseInt(data.loop)]}`;
+	const results = ["Continue Actions", "Stop Action Sequence", "Jump To Action", "Jump Forward Actions"];
+	return `If True: ${results[parseInt(data.iftrue)]} ~ If False: ${results[parseInt(data.iffalse)]}`;
 },
 
 //---------------------------------------------------------------------
-// DBM Mods Manager Variables (Optional but nice to have!)
-//
-// These are variables that DBM Mods Manager uses to show information
-// about the mods for people to see in the list.
-//---------------------------------------------------------------------
+	 // DBM Mods Manager Variables (Optional but nice to have!)
+	 //
+	 // These are variables that DBM Mods Manager uses to show information
+	 // about the mods for people to see in the list.
+	 //---------------------------------------------------------------------
 
-// Who made the mod (If not set, defaults to "DBM Mods")
-author: "ZockerNico",
+	 // Who made the mod (If not set, defaults to "DBM Mods")
+	 author: "Armağan",
 
-// The version of the mod (Defaults to 1.0.0)
-version: "1.9.5", //Added in 1.9.5
+	 // The version of the mod (Defaults to 1.0.0)
+	 version: "1.0.0",
 
-// A short description to show on the mod line for this mod (Must be on a single line)
-short_description: "This action will loop the queue or the current item.",
+	 // A short description to show on the mod line for this mod (Must be on a single line)
+	 short_description: "If the item is in the list, make transactions..",
 
-// If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
+	 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
 
 
-//---------------------------------------------------------------------
+	 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
 // Action Fields
@@ -56,7 +56,7 @@ short_description: "This action will loop the queue or the current item.",
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["status", "loop"],
+fields: ["storage", "varName", "item", "iftrue", "iftrueVal", "iffalse", "iffalseVal"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -76,30 +76,27 @@ fields: ["status", "loop"],
 
 html: function(isEvent, data) {
 	return `
+	<div><p><u>Mod Info:</u><br>Created By Armağan#2448</p></div><br>
 <div>
-	<p>
-		Made by ZockerNico.<br>
-	</p>
-</div>
-<div style="float: left; width: 45%; padding-top: 8px;">
-	Loop Setting:<br>
-	<select id="status" class="round" onchange="glob.onChange(this)">
-		<option value="0" selected>Enable</option>
-		<option value="1">Disable</option>
-	</select>
-</div>
-<div style="float: right; width: 50%; padding-top: 8px;">
-	Loop Operation:<br>
-	<select id="loop" class="round">
-		<option value="0" selected>Loop Whole Queue</option>
-		<option value="1">Loop Current Item</option>
-	</select><br>
-</div>
-<div style="float: left; width: 100%; padding-top: 8px;">
-	<p>
-		Please put the Welcome action into a Bot Initalization event to be able to store the current song!
-	</p>
-</div>`;
+	<div style="float: left; width: 35%;">
+		Variable:<br>
+		<select id="storage" class="round" onchange="glob.refreshVariableList(this)">
+			${data.variables[1]}
+		</select>
+	</div>
+	<div id="varNameContainer" style="float: right; width: 60%;">
+		Variable Name:<br>
+		<input id="varName" class="round" type="text" list="variableList">
+	</div>
+</div><br><br><br>
+	<div style="float: left; width: 90%;">
+		Item:<br>
+		<input id="item" class="round" type="text" placeholder="...">
+	</div>
+</div><br><br><br>
+<div style="padding-top: 8px;">
+	${data.conditions[0]}
+</div>`
 },
 
 //---------------------------------------------------------------------
@@ -111,6 +108,11 @@ html: function(isEvent, data) {
 //---------------------------------------------------------------------
 
 init: function() {
+	const {glob, document} = this;
+
+	glob.refreshVariableList(document.getElementById('storage'));
+	glob.onChangeTrue(document.getElementById('iftrue'));
+	glob.onChangeFalse(document.getElementById('iffalse'));
 },
 
 //---------------------------------------------------------------------
@@ -123,35 +125,22 @@ init: function() {
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
-	const Audio = this.getDBM().Audio;
-	const server = cache.server;
-	const status = parseInt(data.status);
-	const loop = parseInt(data.loop);
+	const type = parseInt(data.storage);
+	const varName = this.evalMessage(data.varName, cache);
+	const variable = this.getVariable(type, varName, cache);
+	const item = this.evalMessage(data.item, cache);
+	var result = Boolean(false);
 
-	switch(status) {
-		case 0://Enable
-			switch(loop) {
-				case 0://Loop Queue
-					Audio.loopQueue[server.id] = true;
-					break;
-				case 1://Loop Item
-					Audio.loopItem[server.id] = true;
-					break;
-			};
-			break;
-		case 1://Disable
-			switch(loop) {
-				case 0://Loop Queue
-					Audio.loopQueue[server.id] = false;
-					break;
-				case 1://Loop Item
-					Audio.loopItem[server.id] = false;
-					break;
-			};
-			break;
-	};
+
+		if (variable.indexOf(item) === -1) {
+		  result = Boolean(false);
+		}
+		else {
+			result = Boolean(true);
+		}
 	
-	this.callNextAction(cache);
+
+	this.executeResults(result, data, cache);
 },
 
 //---------------------------------------------------------------------
@@ -164,7 +153,6 @@ action: function(cache) {
 //---------------------------------------------------------------------
 
 mod: function(DBM) {
-	//Everything that is needed to run this mod is placed in the Welcome action of DBM Mods.
 }
 
 }; // End of module
