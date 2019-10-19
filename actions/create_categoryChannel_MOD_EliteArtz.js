@@ -92,10 +92,6 @@ html: function(isEvent, data) {
 		<p>
 			<u>Mod Info:</u><br>
 			Created by EliteArtz!
-		</p><br>
-		<p>
-			<u>Notices:</u><br>
-			- Requires Discord Bot Maker <b>BETA</b>
 		</p>
 	</div><br>
 Name:<br>

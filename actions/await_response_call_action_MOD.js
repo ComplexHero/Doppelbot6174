@@ -34,7 +34,7 @@ subtitle: function(data) {
 //---------------------------------------------------------------------
 
 // Who made the mod (If not set, defaults to "DBM Mods")
-author: "MrGold, General Wrex & EliteArtz", // Code: General Wrex, Style: EliteArtz, New Design and Code: MrGold
+author: "Almeida, MrGold, General Wrex & EliteArtz", // Code: General Wrex, Style: EliteArtz, New Design and Code: MrGold, Almeida
 
 // The version of the mod (Defaults to 1.0.0)
 version: "1.9.4", // Added in 1.8.8
@@ -92,7 +92,7 @@ html: function(isEvent, data) {
 	<div>
 	<p>
 		<u>Mod Info:</u><br>
-		Created by MrGold, General Wrex & EliteArtz
+		Created by Almeida, MrGold, General Wrex & EliteArtz
 	</p>
 </div><br>
 <div class="codeblock" style="float: left; width: 88%; padding-top: 8px;">
@@ -284,8 +284,12 @@ action: function(cache) {
 			max: max,
 			time: time,
 			errors: ['time']
-		}).then(function(collected) { 
-			this.storeValue(collected.array(), storage, varName2, cache);
+		}).then(function(collected) {
+			if (collected.size === 1) {
+				this.storeValue(collected.first(), storage, varName2, cache);
+			} else {
+				this.storeValue(collected.array(), storage, varName2, cache);
+			}
 			this.executeResults(true, data, cache);
 		}.bind(this)).catch(function() {
 			this.executeResults(false, data, cache);
