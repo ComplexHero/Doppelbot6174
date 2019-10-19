@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Store Member Data",
+name: "Store Server Things (EliteArtz)",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Store Member Data",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Deprecated",
+section: "Server Control",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,10 +23,31 @@ section: "Deprecated",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const members = ['Mentioned User', 'Command Author', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	const storage = ['', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	return `${members[parseInt(data.member)]} - ${storage[parseInt(data.storage)]} (${data.varName2})`;
+	const servers = ['Current Server', 'Temp Variable', 'Server Variable', 'Global Variable'];
+	const info = ['Server Channel IDs', 'Server Role IDs', 'Server Member IDs'];
+	return `${servers[parseInt(data.server)]} - ${info[parseInt(data.info)]}`;
 },
+
+//---------------------------------------------------------------------
+	 // DBM Mods Manager Variables (Optional but nice to have!)
+	 //
+	 // These are variables that DBM Mods Manager uses to show information
+	 // about the mods for people to see in the list.
+	 //---------------------------------------------------------------------
+
+	 // Who made the mod (If not set, defaults to "DBM Mods")
+	 author: "EliteArtz",
+
+	 // The version of the mod (Defaults to 1.0.0)
+	 version: "1.8.3",
+
+	 // A short description to show on the mod line for this mod (Must be on a single line)
+	 short_description: "Stores more Server Information",
+
+	 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
+
+
+	 //---------------------------------------------------------------------
 
 //---------------------------------------------------------------------
 // Action Storage Function
@@ -37,7 +58,19 @@ subtitle: function(data) {
 variableStorage: function(data, varType) {
 	const type = parseInt(data.storage);
 	if(type !== varType) return;
-	return ([data.varName2, 'Unknown Type']);
+	const info = parseInt(data.info);
+	let dataType = 'Unknown Type';
+	switch(info) {
+		case 0:
+			dataType = 'Server Channel IDs';
+			break;
+    case 1:
+		  dataType = 'Server Role IDs'
+			break;
+	  case 2:
+		  dataType = 'Server Member IDs'
+	}
+	return ([data.varName2, dataType]);
 },
 
 //---------------------------------------------------------------------
@@ -48,49 +81,55 @@ variableStorage: function(data, varType) {
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["member", "varName", "dataName", "defaultVal", "storage", "varName2"],
+fields: ["server", "varName", "info", "storage", "varName2"],
 
 //---------------------------------------------------------------------
 // Command HTML
 //
 // This function returns a string containing the HTML used for
-// editting actions. 
+// editting actions.
 //
 // The "isEvent" parameter will be true if this action is being used
-// for an event. Due to their nature, events lack certain information, 
+// for an event. Due to their nature, events lack certain information,
 // so edit the HTML to reflect this.
 //
-// The "data" parameter stores constants for select elements to use. 
+// The "data" parameter stores constants for select elements to use.
 // Each is an array: index 0 for commands, index 1 for events.
-// The names are: sendTargets, members, roles, channels, 
+// The names are: sendTargets, members, roles, channels,
 //                messages, servers, variables
 //---------------------------------------------------------------------
 
 html: function(isEvent, data) {
 	return `
+	<div>
+	  <p>
+		  <u>Mod Info:</u><br>
+			Created by EliteArtz
+		</p>
+	</div><br>
 <div>
 	<div style="float: left; width: 35%;">
-		Member:<br>
-		<select id="member" class="round" onchange="glob.memberChange(this, 'varNameContainer')">
-			${data.members[isEvent ? 1 : 0]}
+		Source Server:<br>
+		<select id="server" class="round" onchange="glob.serverChange(this, 'varNameContainer')">
+			${data.servers[isEvent ? 1 : 0]}
 		</select>
 	</div>
 	<div id="varNameContainer" style="display: none; float: right; width: 60%;">
 		Variable Name:<br>
-		<input id="varName" class="round" type="text" list="variableList">
+		<input id="varName" class="round" type="text" list="variableList"><br>
 	</div>
 </div><br><br><br>
-<div style="padding-top: 8px;">
-	<div style="float: left; width: 40%;">
-		Data Name:<br>
-		<input id="dataName" class="round" type="text">
+<div>
+	<div style="padding-top: 8px; width: 70%;">
+		Source Info:<br>
+		<select id="info" class="round">
+			<option value="0" selected>Server Channel IDs</option>
+			<option value="1">Server Role IDs</option>
+			<option value="2">Server Member IDs</option>
+		</select>
 	</div>
-	<div style="float: left; width: 60%;">
-		Default Value (if data doesn't exist):<br>
-		<input id="defaultVal" class="round" type="text" value="0">
-	</div>
-</div><br><br><br>
-<div style="padding-top: 8px;">
+</div><br>
+<div>
 	<div style="float: left; width: 35%;">
 		Store In:<br>
 		<select id="storage" class="round">
@@ -115,31 +154,42 @@ html: function(isEvent, data) {
 init: function() {
 	const {glob, document} = this;
 
-	glob.memberChange(document.getElementById('member'), 'varNameContainer');
+	glob.serverChange(document.getElementById('server'), 'varNameContainer')
 },
 
 //---------------------------------------------------------------------
 // Action Bot Function
 //
 // This is the function for the action within the Bot's Action class.
-// Keep in mind event calls won't have access to the "msg" parameter, 
+// Keep in mind event calls won't have access to the "msg" parameter,
 // so be sure to provide checks for variable existance.
 //---------------------------------------------------------------------
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
-	const type = parseInt(data.member);
+	const server = parseInt(data.server);
 	const varName = this.evalMessage(data.varName, cache);
-	const member = this.getMember(type, varName, cache);
-	if(member && member.data) {
-		const dataName = this.evalMessage(data.dataName, cache);
-		const defVal = this.eval(this.evalMessage(data.defaultVal, cache), cache);
-		let result;
-		if(defVal === undefined) {
-			result = member.data(dataName);
-		} else {
-			result = member.data(dataName, defVal);
-		}
+	const info = parseInt(data.info);
+	const targetServer = this.getServer(server, varName, cache);
+	if(!targetServer) {
+		this.callNextAction(cache);
+		return;
+	}
+	let result;
+	switch(info) {
+		case 0:
+			result = targetServer.channels.map(channels => channels.id);
+			break;
+		case 1:
+			result = targetServer.roles.map(roles => roles.id);
+			break;
+		case 2:
+			result = targetServer.members.map(members => members.id);
+			break;
+		default:
+			break;
+	}
+	if(result !== undefined) {
 		const storage = parseInt(data.storage);
 		const varName2 = this.evalMessage(data.varName2, cache);
 		this.storeValue(result, storage, varName2, cache);

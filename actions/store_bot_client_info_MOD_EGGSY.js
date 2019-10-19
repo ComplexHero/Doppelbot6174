@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Store Role Things",
+name: "Store Bot Client Info #3",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Store Role Things",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Role Control",
+section: "Bot Client Control",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,9 +23,8 @@ section: "Role Control",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const roles = ['Mentioned Role', '1st Author Role', '1st Server Role', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	const info = ['Position role list', 'Creation Date', 'Managed bot role?', 'Member list with this role', 'Member amount with this role', 'Can bot edit role?']
-	return `${roles[parseInt(data.role)]} - ${info[parseInt(data.info)]}`;
+	const info = ['Total Amount of Channels', 'Total Amount of Emojis', 'Bot\'s Previous Pings', 'Uptime in Days', 'Uptime in Days (Rounded)', 'Memory (RAM) Usage'];
+	return `${info[parseInt(data.info)]}`;
 },
 
 //---------------------------------------------------------------------
@@ -36,13 +35,13 @@ subtitle: function(data) {
 	 //---------------------------------------------------------------------
 
 	 // Who made the mod (If not set, defaults to "DBM Mods")
-	 author: "Lasse",
+	 author: "EGGSY",
 
 	 // The version of the mod (Defaults to 1.0.0)
-	 version: "1.8.2",
+	 version: "1.0.3",
 
 	 // A short description to show on the mod line for this mod (Must be on a single line)
-	 short_description: "Stores Roles Information",
+	 short_description: "Stores more Bot Client Information by EGGSY",
 
 	 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
 
@@ -62,22 +61,22 @@ variableStorage: function(data, varType) {
 	let dataType = 'Unknown Type';
 	switch(info) {
 		case 0:
-			dataType = 'Number';
+			dataType = "Number";
 			break;
 		case 1:
-			dataType = 'Date';
+			dataType = "Number";
 			break;
 		case 2:
-			dataType = 'Boolean';
+			dataType = "Number";
 			break;
 		case 3:
-			dataType = 'Text';
+			dataType = "Time";
 			break;
 		case 4:
-			dataType = 'Number';
+			dataType = "Time";
 			break;
 		case 5:
-			dataType = 'Text';
+			dataType = "Number";
 			break;
 	}
 	return ([data.varName2, dataType]);
@@ -91,7 +90,7 @@ variableStorage: function(data, varType) {
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["role", "varName", "info", "storage", "varName2"],
+fields: ["info", "storage", "varName2"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -114,33 +113,19 @@ html: function(isEvent, data) {
 	<div>
 		<p>
 			<u>Mod Info:</u><br>
-			Created by Lasse!
+			Created by EGGSY!
 		</p>
 	</div><br>
-<div>
-	<div style="float: left; width: 35%;">
-		Source Role:<br>
-		<select id="role" class="round" onchange="glob.roleChange(this, 'varNameContainer')">
-			${data.roles[isEvent ? 1 : 0]}
-		</select>
-	</div>
-	<div id="varNameContainer" style="display: none; float: right; width: 60%;">
-		Variable Name:<br>
-		<input id="varName" class="round" type="text" list="variableList"><br>
-	</div>
-</div><br><br><br>
-<div>
-	<div style="padding-top: 8px; width: 70%;">
-		Source Info:<br>
-		<select id="info" class="round">
-			<option value="0" selected>Postion in Role list</option>
-			<option value="1">Creation date</option>
-			<option value="2">Managed bot Role</option>
-			<option value="3">Members list with this Role</option>
-			<option value="4">Members amount with this role</option>
-			<option value="5">Can bot edit this role?</option>
-		</select>
-	</div>
+<div style="float: left; width: 80%;">
+	Source Info:<br>
+	<select id="info" class="round">
+		<option value="0">Total Amount of Channels</option>
+		<option value="1">Total Amount of Emojis</option>
+		<option value="2">Bot's Previous Pings</option>
+		<option value="3">Uptime in Days</option>
+		<option value="4">Uptime in Days (Rounded)</option>
+		<option value="5">Memory (RAM) Usage</option>
+	</select>
 </div><br>
 <div>
 	<div style="float: left; width: 35%;">
@@ -167,7 +152,7 @@ html: function(isEvent, data) {
 init: function() {
 	const {glob, document} = this;
 
-	glob.roleChange(document.getElementById('role'), 'varNameContainer')
+	glob.messageChange(document.getElementById('message'), 'varNameContainer')
 },
 
 //---------------------------------------------------------------------
@@ -180,36 +165,34 @@ init: function() {
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
-	const role = parseInt(data.role);
-	const varName = this.evalMessage(data.varName, cache);
+	const botClient = this.getDBM().Bot.bot;
 	const info = parseInt(data.info);
-	const targetRole = this.getRole(role, varName, cache);
-	if(!targetRole) {
+	const msToDay = (1000*60*60*24);
+	if(!botClient) {
 		this.callNextAction(cache);
 		return;
 	}
-	let result;
 	switch(info) {
 		case 0:
-			result = targetRole.calculatedPosition;
+			result = botClient.channels.size;
 			break;
 		case 1:
-			result = targetRole.createdAt;
+			result = botClient.emojis.size;
 			break;
 		case 2:
-			result = targetRole.managed;
+			result = botClient.pings;
 			break;
 		case 3:
-			result = targetRole.members.array();
+			result = botClient.uptime/msToDay;
 			break;
 		case 4:
-			result = targetRole.members.array().length;
+			result = Math.floor(botClient.uptime/msToDay);
 			break;
 		case 5:
-			result = targetRole.editable;
+			result = "%" + ((process.memoryUsage().heapUsed / 1024) / 1024).toFixed(2);
 			break;
 		default:
-			break;
+		break;
 	}
 	if(result !== undefined) {
 		const storage = parseInt(data.storage);
@@ -231,4 +214,4 @@ action: function(cache) {
 mod: function(DBM) {
 }
 
-}; // End of module
+}; // End of module, thanks to Lasse btw!

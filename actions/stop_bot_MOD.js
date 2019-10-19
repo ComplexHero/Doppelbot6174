@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Store Role Things",
+name: "Stop Bot",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Store Role Things",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Role Control",
+section: "Bot Client Control",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,9 +23,7 @@ section: "Role Control",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const roles = ['Mentioned Role', '1st Author Role', '1st Server Role', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	const info = ['Position role list', 'Creation Date', 'Managed bot role?', 'Member list with this role', 'Member amount with this role', 'Can bot edit role?']
-	return `${roles[parseInt(data.role)]} - ${info[parseInt(data.info)]}`;
+	return `Stops bot`;
 },
 
 //---------------------------------------------------------------------
@@ -42,7 +40,7 @@ subtitle: function(data) {
 	 version: "1.8.2",
 
 	 // A short description to show on the mod line for this mod (Must be on a single line)
-	 short_description: "Stores Roles Information",
+	 short_description: "Stops the bot completly",
 
 	 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
 
@@ -55,33 +53,7 @@ subtitle: function(data) {
 // Stores the relevant variable info for the editor.
 //---------------------------------------------------------------------
 
-variableStorage: function(data, varType) {
-	const type = parseInt(data.storage);
-	if(type !== varType) return;
-	const info = parseInt(data.info);
-	let dataType = 'Unknown Type';
-	switch(info) {
-		case 0:
-			dataType = 'Number';
-			break;
-		case 1:
-			dataType = 'Date';
-			break;
-		case 2:
-			dataType = 'Boolean';
-			break;
-		case 3:
-			dataType = 'Text';
-			break;
-		case 4:
-			dataType = 'Number';
-			break;
-		case 5:
-			dataType = 'Text';
-			break;
-	}
-	return ([data.varName2, dataType]);
-},
+//variableStorage: function(data, varType) {},
 
 //---------------------------------------------------------------------
 // Action Fields
@@ -91,7 +63,7 @@ variableStorage: function(data, varType) {
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["role", "varName", "info", "storage", "varName2"],
+fields: [],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -111,48 +83,12 @@ fields: ["role", "varName", "info", "storage", "varName2"],
 
 html: function(isEvent, data) {
 	return `
-	<div>
-		<p>
-			<u>Mod Info:</u><br>
-			Created by Lasse!
-		</p>
-	</div><br>
 <div>
-	<div style="float: left; width: 35%;">
-		Source Role:<br>
-		<select id="role" class="round" onchange="glob.roleChange(this, 'varNameContainer')">
-			${data.roles[isEvent ? 1 : 0]}
-		</select>
-	</div>
-	<div id="varNameContainer" style="display: none; float: right; width: 60%;">
-		Variable Name:<br>
-		<input id="varName" class="round" type="text" list="variableList"><br>
-	</div>
-</div><br><br><br>
-<div>
-	<div style="padding-top: 8px; width: 70%;">
-		Source Info:<br>
-		<select id="info" class="round">
-			<option value="0" selected>Postion in Role list</option>
-			<option value="1">Creation date</option>
-			<option value="2">Managed bot Role</option>
-			<option value="3">Members list with this Role</option>
-			<option value="4">Members amount with this role</option>
-			<option value="5">Can bot edit this role?</option>
-		</select>
-	</div>
-</div><br>
-<div>
-	<div style="float: left; width: 35%;">
-		Store In:<br>
-		<select id="storage" class="round">
-			${data.variables[1]}
-		</select>
-	</div>
-	<div id="varNameContainer2" style="float: right; width: 60%;">
-		Variable Name:<br>
-		<input id="varName2" class="round" type="text"><br>
-	</div>
+	<p>
+		<u>Warning:</u><br>
+		This action stops the bot. You cannot restart it with a command!<br>
+		Choose the permissions for this command/event carefully!
+	</p>
 </div>`
 },
 
@@ -164,11 +100,7 @@ html: function(isEvent, data) {
 // functions for the DOM elements.
 //---------------------------------------------------------------------
 
-init: function() {
-	const {glob, document} = this;
-
-	glob.roleChange(document.getElementById('role'), 'varNameContainer')
-},
+init: function() {},
 
 //---------------------------------------------------------------------
 // Action Bot Function
@@ -180,43 +112,8 @@ init: function() {
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
-	const role = parseInt(data.role);
-	const varName = this.evalMessage(data.varName, cache);
-	const info = parseInt(data.info);
-	const targetRole = this.getRole(role, varName, cache);
-	if(!targetRole) {
-		this.callNextAction(cache);
-		return;
-	}
-	let result;
-	switch(info) {
-		case 0:
-			result = targetRole.calculatedPosition;
-			break;
-		case 1:
-			result = targetRole.createdAt;
-			break;
-		case 2:
-			result = targetRole.managed;
-			break;
-		case 3:
-			result = targetRole.members.array();
-			break;
-		case 4:
-			result = targetRole.members.array().length;
-			break;
-		case 5:
-			result = targetRole.editable;
-			break;
-		default:
-			break;
-	}
-	if(result !== undefined) {
-		const storage = parseInt(data.storage);
-		const varName2 = this.evalMessage(data.varName2, cache);
-		this.storeValue(result, storage, varName2, cache);
-	}
-	this.callNextAction(cache);
+	console.log('Stopped bot!');
+	this.getDBM().Bot.bot.destroy();
 },
 
 //---------------------------------------------------------------------

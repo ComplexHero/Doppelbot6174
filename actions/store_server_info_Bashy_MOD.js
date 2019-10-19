@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Store Role Things",
+name: "Store Server Things (Bashy)",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -14,7 +14,7 @@ name: "Store Role Things",
 // This is the section the action will fall into.
 //---------------------------------------------------------------------
 
-section: "Role Control",
+section: "Server Control",
 
 //---------------------------------------------------------------------
 // Action Subtitle
@@ -23,9 +23,9 @@ section: "Role Control",
 //---------------------------------------------------------------------
 
 subtitle: function(data) {
-	const roles = ['Mentioned Role', '1st Author Role', '1st Server Role', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	const info = ['Position role list', 'Creation Date', 'Managed bot role?', 'Member list with this role', 'Member amount with this role', 'Can bot edit role?']
-	return `${roles[parseInt(data.role)]} - ${info[parseInt(data.info)]}`;
+	const servers = ['Current Server', 'Temp Variable', 'Server Variable', 'Global Variable'];
+	const info = ['Member Online Count', 'Member Count', 'Role Count', 'Text Channel Count', 'Voice Channel Count'];
+	return `${servers[parseInt(data.server)]} - ${info[parseInt(data.info)]}`;
 },
 
 //---------------------------------------------------------------------
@@ -36,13 +36,13 @@ subtitle: function(data) {
 	 //---------------------------------------------------------------------
 
 	 // Who made the mod (If not set, defaults to "DBM Mods")
-	 author: "Lasse",
+	 author: "Bashy",
 
 	 // The version of the mod (Defaults to 1.0.0)
 	 version: "1.8.2",
 
 	 // A short description to show on the mod line for this mod (Must be on a single line)
-	 short_description: "Stores Roles Information",
+	 short_description: "Stores more Server Information",
 
 	 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
 
@@ -59,25 +59,22 @@ variableStorage: function(data, varType) {
 	const type = parseInt(data.storage);
 	if(type !== varType) return;
 	const info = parseInt(data.info);
-	let dataType = 'Unknown Type';
+	let dataType = 'Text';
 	switch(info) {
 		case 0:
-			dataType = 'Number';
+			dataType = "Number";
 			break;
 		case 1:
-			dataType = 'Date';
+			dataType = "Number";
 			break;
 		case 2:
-			dataType = 'Boolean';
+			dataType = "Number";
 			break;
 		case 3:
-			dataType = 'Text';
+			dataType = "Number";
 			break;
 		case 4:
-			dataType = 'Number';
-			break;
-		case 5:
-			dataType = 'Text';
+			dataType = "Number";
 			break;
 	}
 	return ([data.varName2, dataType]);
@@ -91,7 +88,7 @@ variableStorage: function(data, varType) {
 // are also the names of the fields stored in the action's JSON data.
 //---------------------------------------------------------------------
 
-fields: ["role", "varName", "info", "storage", "varName2"],
+fields: ["server", "varName", "info", "storage", "varName2"],
 
 //---------------------------------------------------------------------
 // Command HTML
@@ -114,14 +111,14 @@ html: function(isEvent, data) {
 	<div>
 		<p>
 			<u>Mod Info:</u><br>
-			Created by Lasse!
+			Created by Bashy!
 		</p>
 	</div><br>
 <div>
 	<div style="float: left; width: 35%;">
-		Source Role:<br>
-		<select id="role" class="round" onchange="glob.roleChange(this, 'varNameContainer')">
-			${data.roles[isEvent ? 1 : 0]}
+		Source Server:<br>
+		<select id="server" class="round" onchange="glob.serverChange(this, 'varNameContainer')">
+			${data.servers[isEvent ? 1 : 0]}
 		</select>
 	</div>
 	<div id="varNameContainer" style="display: none; float: right; width: 60%;">
@@ -133,13 +130,12 @@ html: function(isEvent, data) {
 	<div style="padding-top: 8px; width: 70%;">
 		Source Info:<br>
 		<select id="info" class="round">
-			<option value="0" selected>Postion in Role list</option>
-			<option value="1">Creation date</option>
-			<option value="2">Managed bot Role</option>
-			<option value="3">Members list with this Role</option>
-			<option value="4">Members amount with this role</option>
-			<option value="5">Can bot edit this role?</option>
-		</select>
+			<option value="0">Member Online Count</option>
+			<option value="1">Member Count</option>
+			<option value="2">Role Count</option>
+			<option value="3">Text Channel Count</option>
+			<option value="4">Voice Channel Count</option>
+			</select>
 	</div>
 </div><br>
 <div>
@@ -167,7 +163,7 @@ html: function(isEvent, data) {
 init: function() {
 	const {glob, document} = this;
 
-	glob.roleChange(document.getElementById('role'), 'varNameContainer')
+	glob.serverChange(document.getElementById('server'), 'varNameContainer')
 },
 
 //---------------------------------------------------------------------
@@ -180,33 +176,30 @@ init: function() {
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
-	const role = parseInt(data.role);
+	const server = parseInt(data.server);
 	const varName = this.evalMessage(data.varName, cache);
 	const info = parseInt(data.info);
-	const targetRole = this.getRole(role, varName, cache);
-	if(!targetRole) {
+	const targetServer = this.getServer(server, varName, cache);
+	if(!targetServer) {
 		this.callNextAction(cache);
 		return;
 	}
 	let result;
 	switch(info) {
 		case 0:
-			result = targetRole.calculatedPosition;
+			result = targetServer.presences.size;
 			break;
 		case 1:
-			result = targetRole.createdAt;
+			result = targetServer.memberCount;
 			break;
 		case 2:
-			result = targetRole.managed;
+			result = targetServer.roles.size;
 			break;
 		case 3:
-			result = targetRole.members.array();
+			result = targetServer.channels.findAll('type', 'text').length;
 			break;
 		case 4:
-			result = targetRole.members.array().length;
-			break;
-		case 5:
-			result = targetRole.editable;
+			result = targetServer.channels.findAll('type', 'voice').length;
 			break;
 		default:
 			break;

@@ -6,7 +6,7 @@ module.exports = {
 // This is the name of the action displayed in the editor.
 //---------------------------------------------------------------------
 
-name: "Store Member Info",
+name: "Store Game Info",
 
 //---------------------------------------------------------------------
 // Action Section
@@ -24,7 +24,7 @@ section: "Member Control",
 
 subtitle: function(data) {
 	const members = ['Mentioned User', 'Command Author', 'Temp Variable', 'Server Variable', 'Global Variable'];
-	const info = ['Member Object', 'Member ID', 'Member Username', 'Member Display Name', 'Member Color', 'Member Server', 'Member Last Message', 'Member Highest Role', 'Member Hoist Role', 'Member Color Role', 'Member Game', 'Member Status', 'Member Avatar URL', 'Member Role List', 'Member Join Date', 'Member Voice Channel', 'Member Discrim', 'Member Account Creation Date','Member Tag', 'Member Last Message ID', 'Member Roles Amount', 'Member Permissions List']
+	const info = ['Game Application ID', 'Game Details', 'Game Name', 'Game State', 'Game Is Being Streamed?', 'Game Stream URL', 'Game Status Type', 'Game Large Image ID', 'Game Large Image URL', 'Game Large Image Text', 'Game Small Image ID', 'Game Small Image URL', 'Game Small Image Text', 'Game Timestamp Start', 'Game Party ID', 'Game Timestamp End', 'Game Party Size'];
 	return `${members[parseInt(data.member)]} - ${info[parseInt(data.info)]}`;
 },
 
@@ -36,16 +36,15 @@ subtitle: function(data) {
 //---------------------------------------------------------------------
 
 // Who made the mod (If not set, defaults to "DBM Mods")
-author: "DBM, Lasse, TheMonDon & Cap",
+author: "MrGold",
 
 // The version of the mod (Defaults to 1.0.0)
-version: "1.9.6", //Added in 1.9.2
+version: "1.9.5", //Added in 1.9.5
 
 // A short description to show on the mod line for this mod (Must be on a single line)
-short_description: "Store Member Information",
+short_description: "Stores Games information",
 
 // If it depends on any other mods by name, ex: WrexMODS if the mod uses something from WrexMods
-
 
 //---------------------------------------------------------------------
 
@@ -62,51 +61,54 @@ variableStorage: function(data, varType) {
 	let dataType = 'Unknown Type';
 	switch(info) {
 		case 0:
-			dataType = "Server Member";
+			dataType = "Application ID";
 			break;
 		case 1:
-			dataType = "Server Member ID";
+			dataType = "Text";
 			break;
 		case 2:
+			dataType = "Text";
+			break;
 		case 3:
-		case 10:
-		case 11:
-		case 16:
-		case 18:
 			dataType = "Text";
 			break;
 		case 4:
-			dataType = "Color";
+			dataType = "Boolean";
 			break;
 		case 5:
-			dataType = "Server";
+			dataType = "Stream URL";
 			break;
 		case 6:
-			dataType = "Message";
+			dataType = "Number";
 			break;
 		case 7:
+			dataType = "Large Image ID";
+			break;
 		case 8:
+			dataType = "Large Image URL";
+			break;
 		case 9:
-			dataType = "Role";
+			dataType = "Large Image Text";
+			break;
+		case 10:
+			dataType = "Small Image ID";
+			break;
+		case 11:
+			dataType = "Small Image URL";
 			break;
 		case 12:
-			dataType = "Image URL";
+			dataType = "Small Image Text";
 			break;
 		case 13:
-		case 21: // Added by Cap in 1.9.6
-			dataType = "List";
-			break;
-		case 14:
-		case 17:
 			dataType = "Date";
 			break;
+		case 14:
+			dataType = "Party ID";
+			break;
 		case 15:
-			dataType = "Voice Channel";
+			dataType = "Date";
 			break;
-		case 19:
-			dataType = "Message ID";
-			break;
-		case 20: // Added by Cap in 1.9.6
+		case 16:
 			dataType = "Number";
 			break;
 	}
@@ -141,7 +143,12 @@ fields: ["member", "varName", "info", "storage", "varName2"],
 
 html: function(isEvent, data) {
 	return `
-	<div><p>This action has been modified by DBM Mods.</p></div><br>
+<div>
+    <p>
+        <u>Mod Info:</u><br>
+	Created by MrGold
+    </p>
+</div><br>
 <div>
 	<div style="float: left; width: 35%;">
 		Source Member:<br>
@@ -158,28 +165,27 @@ html: function(isEvent, data) {
 	<div style="padding-top: 8px; width: 70%;">
 		Source Info:<br>
 		<select id="info" class="round">
-			<option value="0" selected>Member Object</option>
-			<option value="1">Member ID</option>
-			<option value="2">Member Username</option>
-			<option value="3">Member Display Name</option>
-			<option value="16">Member Discrim (#XXXX)</option>
-			<option value="18">Member Tag (User#XXXX)</option>
-			<option value="4">Member Color</option>
-			<option value="10">Member Game</option>
-			<option value="11">Member Status</option>
-			<option value="12">Member Avatar URL</option>
-			<option value="5">Member Server</option>
-			<option value="21">Member Permissions List</option>
-			<option value="14">Member Join Date</option>
-			<option value="17">Member Account Creation Date</option>
-			<option value="15">Member Voice Channel</option>
-			<option value="6">Member Last Message</option>
-			<option value="19">Member Last Message ID</option>
-			<option value="13">Member Role List</option>
-			<option value="20">Member Roles Amount</option>
-			<option value="7">Member Highest Role</option>
-			<option value="8">Member Hoist Role</option>
-			<option value="9">Member Color Role</option>
+			<option value="0" selected>Game Application ID</option>
+			<option value="1">Game Details</option>
+			<option value="2">Game Name</option>
+			<option value="3">Game State</option>
+			<option value="4">Game Is Being Streamed?</option>
+			<option value="5">Game Stream URL</option>
+			<option value="6">Game Status Type</option>
+			<option value="13">Game Timestamp Start</option>
+			<option value="15">Game Timestamp End</option>
+			<option value="14">Game Party ID</option>
+			<option value="16">Game Party Size</option>
+			<optgroup label="Assets Large Image">
+			<option value="7">Game Large Image ID</option>
+			<option value="8">Game Large Image URL</option>
+			<option value="9">Game Large Image Text</option>
+			</optgroup>
+			<optgroup label="Assets Small Image">
+			<option value="10">Game Small Image ID</option>
+			<option value="11">Game Small Image URL</option>
+			<option value="12">Game Small Image Text</option>
+			</optgroup>
 		</select>
 	</div>
 </div><br>
@@ -221,107 +227,162 @@ init: function() {
 
 action: function(cache) {
 	const data = cache.actions[cache.index];
+	const info = parseInt(data.info);
+	
 	const member = parseInt(data.member);
 	const varName = this.evalMessage(data.varName, cache);
-	const info = parseInt(data.info);
 	const mem = this.getMember(member, varName, cache);
+	
 	if(!mem) {
 		this.callNextAction(cache);
 		return;
 	}
-	const server = cache.server;
+	
 	let result;
 	switch(info) {
 		case 0:
-			result = mem;
-			break;
-		case 1:
-			result = mem.id;
-			break;
-		case 2:
-			if(mem.user) {
-				result = mem.user.username;
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else {
+				result = mem.presence.game.applicationID;
 			}
 			break;
-		case 3:
-			result = mem.displayName;
+		case 1:
+			if(!mem.presence.game) {
+			    result = "null";
+			} else {
+				result = mem.presence.game.details;
+			}
 			break;
-		case 4:
-			result = mem.displayHexColor;
-			break;
-		case 5:
-			result = mem.guild;
-			break;
-		case 6:
-			result = mem.lastMessage;
-			break;
-		case 7:
-			result = mem.highestRole;
-			break;
-		case 8:
-			result = mem.hoistRole;
-			break;
-		case 9:
-			result = mem.colorRole;
-			break;
-			//Removed "Check if member" stuff from here. ~TheMonDon
-		case 10:
-			if(mem.presence && mem.presence.game) {
+		case 2:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else {
 				result = mem.presence.game.name;
 			}
 			break;
+		case 3:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else {
+				result = mem.presence.game.state;
+			}
+			break;
+		case 4:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else {
+				result = mem.presence.game.streaming;
+			}
+			break;
+		case 5:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else {
+				result = mem.presence.game.url;
+			}
+			break;
+		case 6:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else {
+				result = mem.presence.game.type;
+			}
+			break;
+		case 7:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.assets) {
+				result = "null";
+			} else {
+				result = mem.presence.game.assets.largeImage;
+			}
+			break;
+		case 8:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.assets) {
+				result = "null";
+			} else {
+				result = mem.presence.game.assets.largeImageURL;
+			}
+			break;
+		case 9:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.assets) {
+				result = "null";
+			} else {
+				result = mem.presence.game.assets.largeText;
+			}
+			break;
+		case 10:
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.assets) {
+				result = "null";
+			} else {
+				result = mem.presence.game.assets.smallImage;
+			}
+			break;
 		case 11:
-			if(mem.presence) {
-				const status = mem.presence.status;
-				if(status === 'online') result = 'Online';
-				else if(status === 'offline') result = 'Offline';
-				else if(status === 'idle') result = 'Idle';
-				else if(status === 'dnd') result = 'Do Not Disturb';
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.assets) {
+				result = "null";
+			} else {
+				result = mem.presence.game.assets.smallImageURL;
 			}
 			break;
 		case 12:
-			if(mem.user) {
-				result = mem.user.displayAvatarURL;
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.assets) {
+				result = "null";
+			} else {
+				result = mem.presence.game.assets.smallText;
 			}
 			break;
 		case 13:
-			if(mem.roles) {
-				result = mem.roles.array();
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.timestamps) {
+				result = "null";
+			} else {
+				result = mem.presence.game.timestamps.start;
 			}
 			break;
 		case 14:
-			result = mem.joinedAt;
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.party) {
+				result = "null";
+			} else {
+				result = mem.presence.game.party.id;
+			}
 			break;
 		case 15:
-			result = mem.voiceChannel;
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.timestamps) {
+				result = "null";
+			} else {
+				result = mem.presence.game.timestamps.end;
+			}
 			break;
 		case 16:
-			if(mem.user) {
-				result = mem.user.discriminator;
+		    if(!mem.presence.game) {
+			    result = "null";
+			} else if(!mem.presence.game.party) {
+				result = "null";
+			} else {
+				result = mem.presence.game.party.size;
 			}
-			break;
-		case 17:
-			if (mem.user) {
-				result = mem.user.createdAt;
-			}
-			break;
-		case 18:
-			if (mem.user) {
-				result = mem.user.tag;
-			}
-			break;
-		case 19:
-			result = mem.lastMessageID;
-			break;
-		case 20: // Added by Cap in 1.9.6
-			result = mem.roles.size;
-			break;
-		case 21: // Added by Cap in 1.9.6
-	        result = mem.permissions.toArray().join(", ").replace(/_/g, " ").toLowerCase();
 			break;
 		default:
 			break;
 	}
+	
 	if(result !== undefined) {
 		const storage = parseInt(data.storage);
 		const varName2 = this.evalMessage(data.varName2, cache);
