@@ -1,1 +1,3909 @@
-//Insert Code Here
+[
+  null,
+  {
+    "name": "Sync",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "otGeW",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Sync",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "SyncSwitch",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Sync",
+        "comparison": "1",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "5",
+        "name": "Check Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Sync",
+        "changeType": "0",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Sync on",
+        "storage": "1",
+        "varName2": "Mess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Sync",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Sync off",
+        "storage": "1",
+        "varName2": "Mess2",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess2", "name": "Delete Message" },
+      { "name": "End Action Sequence" }
+    ],
+    "comType": "0"
+  },
+  {
+    "name": "Relay",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "TfVLh",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "RelaySwitch",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "comparison": "1",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "5",
+        "name": "Check Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "changeType": "0",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Relay on",
+        "storage": "1",
+        "varName2": "Mess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Relay off",
+        "storage": "1",
+        "varName2": "Mess2",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess2", "name": "Delete Message" },
+      { "name": "End Action Sequence" }
+    ],
+    "comType": "0"
+  },
+  {
+    "name": "Upload",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "uivQR",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "info": "0",
+        "infoIndex": "1",
+        "storage": "1",
+        "varName": "Sendto",
+        "name": "Store Command Params"
+      },
+      {
+        "info": "1",
+        "find": "upload",
+        "storage": "1",
+        "varName": "UL",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "3",
+        "varName": "UL",
+        "info": "4",
+        "storage": "1",
+        "varName2": "LastMess",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "LastMess",
+        "info": "0",
+        "storage2": "1",
+        "varName2": "URL",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "1",
+        "varName": "LastMess",
+        "info": "1",
+        "storage2": "1",
+        "varName2": "Filename",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "1",
+        "varName": "LastMess",
+        "info": "5",
+        "storage2": "1",
+        "varName2": "Filesize",
+        "name": "Store Attachment Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChanName",
+        "name": "Store Channel Info"
+      },
+      {
+        "url": "${tempVars(\"URL\")}",
+        "fileName": "",
+        "fileFormat": "",
+        "filePath": "./downloads",
+        "name": "Download File"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "CatName",
+        "name": "Store Channel Info"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"CatName\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChanName\")}",
+        "storage": "1",
+        "varName": "ReceivingChan",
+        "name": "Find Channel"
+      },
+      {
+        "FirstNumber": "125",
+        "info": "18",
+        "SecondNumber": "${tempVars(\"Filesize\")}",
+        "storage": "1",
+        "varName": "Math",
+        "name": "Math Operation Plus"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "> ${tempVars(\"Math\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "${tempVars(\"Math\")}", "measurement": "0", "name": "Wait" },
+      {
+        "channel": "5",
+        "varName": "ReceivingChan",
+        "file": "downloads/${tempVars(\"Filename\")}",
+        "message": "",
+        "name": "Send File"
+      },
+      { "time": "10", "measurement": "1", "name": "Wait" },
+      {
+        "filePath": "./downloads/${tempVars(\"Filename\")}",
+        "name": "Delete File"
+      }
+    ],
+    "comType": "0",
+    "_aliases": ["UL"]
+  },
+  {
+    "name": "SendTo",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "EbWxg",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "info": "0",
+        "infoIndex": "1",
+        "storage": "1",
+        "varName": "Sendto",
+        "name": "Store Command Params"
+      },
+      {
+        "info": "1",
+        "find": "upload",
+        "storage": "1",
+        "varName": "UL",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "3",
+        "varName": "UL",
+        "info": "4",
+        "storage": "1",
+        "varName2": "LastMess",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "LastMess",
+        "info": "0",
+        "storage2": "1",
+        "varName2": "URL",
+        "name": "Store Attachment Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChanName",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "CatName",
+        "name": "Store Channel Info"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"CatName\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChanName\")}",
+        "storage": "1",
+        "varName": "ReceivingChan",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "5",
+        "varName": "ReceivingChan",
+        "message": "${tempVars(\"URL\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      }
+    ],
+    "comType": "0",
+    "_aliases": ["Send"]
+  },
+  {
+    "name": "Webhook",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "wCOXm",
+    "actions": [],
+    "_aliases": ["Hide"]
+  },
+  {
+    "name": "GivEmo",
+    "permissions": "NONE",
+    "restriction": "0",
+    "_id": "Vljhl",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ServerName",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "2",
+        "storage": "1",
+        "varName2": "HubName",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerName",
+        "comparison": "1",
+        "value": "tempVars(\"HubName\")",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "find": "Emote Bank A",
+        "storage": "1",
+        "varName": "BankServerA",
+        "name": "Find Server"
+      },
+      {
+        "info": "1",
+        "find": "Emote Bank B",
+        "storage": "1",
+        "varName": "BankServerB",
+        "name": "Find Server"
+      },
+      {
+        "info": "1",
+        "find": "Emote Bank C",
+        "storage": "1",
+        "varName": "BankServerC",
+        "name": "Find Server"
+      },
+      {
+        "info": "1",
+        "find": "Emote Bank D",
+        "storage": "1",
+        "varName": "BankServerD",
+        "name": "Find Server"
+      },
+      {
+        "server": "1",
+        "varName": "BankServerA",
+        "info": "24",
+        "storage": "1",
+        "varName2": "AmountA",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "1",
+        "varName": "BankServerB",
+        "info": "24",
+        "storage": "1",
+        "varName2": "AmountB",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "1",
+        "varName": "BankServerC",
+        "info": "24",
+        "storage": "1",
+        "varName2": "AmountC",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "1",
+        "varName": "BankServerD",
+        "info": "24",
+        "storage": "1",
+        "varName2": "AmountD",
+        "name": "Store Server Info"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      {
+        "info": "0",
+        "infoIndex": "1",
+        "storage": "1",
+        "varName": "EmoteParam",
+        "name": "Store Command Params"
+      },
+      {
+        "info": "0",
+        "infoIndex": "2",
+        "storage": "1",
+        "varName": "BankParam",
+        "name": "Store Command Params"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "storage": "1",
+        "varName2": "Bot",
+        "name": "Get Bot as Member"
+      },
+      {
+        "member": "2",
+        "varName": "Bot",
+        "permission": "MANAGE_MESSAGES",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Member Permissions"
+      },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "storage": "1",
+        "varName": "BankParam",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "find": "Emote Bank ${tempVars(\"BankParam\")}",
+        "storage": "1",
+        "varName": "BankServer",
+        "name": "Find Server"
+      },
+      { "count": "12", "name": "Skip Actions" },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Please choose a bank to send this emote (Say just the uppercased letter, no quotations)\n> Emote Bank A ${tempVars(\"AmountA\")}/100 slots used\n> Emote Bank B ${tempVars(\"AmountB\")}/100 slots used\n> Emote Bank C ${tempVars(\"AmountC\")}/100 slots used\n> Emote Bank D ${tempVars(\"AmountD\")}/100 slots used\nEX: \"A\"",
+        "storage": "1",
+        "varName2": "FirstMess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "filter": "content.match('A') || content.match('B') || content.match('C') || content.match('D') && author.id === '${msg.author.id}'",
+        "max": "1",
+        "time": "100000",
+        "iftrue": "3",
+        "iftrueVal": "5",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "storage2": "1",
+        "varName2": "Letter",
+        "name": "Await Response Call Action"
+      },
+      { "storage": "1", "varName": "FirstMess", "name": "Delete Message" },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ":x:You did not respond in time",
+        "storage": "1",
+        "varName2": "Error1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "10", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Error1", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "member": "2",
+        "varName": "Bot",
+        "permission": "MANAGE_MESSAGES",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Member Permissions"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "6",
+        "storage": "1",
+        "varName2": "Last",
+        "name": "Store Member Info"
+      },
+      { "storage": "1", "varName": "Last", "name": "Delete Message" },
+      {
+        "list": "7",
+        "varName": "Letter",
+        "getType": "0",
+        "position": "",
+        "storage": "1",
+        "varName2": "Finale",
+        "name": "Get Item from List"
+      },
+      {
+        "info": "1",
+        "find": "Emote Bank ${tempVars(\"Finale\")}",
+        "storage": "1",
+        "varName": "BankServer",
+        "name": "Find Server"
+      },
+      {
+        "storage": "1",
+        "varName": "BankServer",
+        "comparison": "0",
+        "value": "'A || B || C'",
+        "iftrue": "3",
+        "iftrueVal": "5",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      { "storage": "1", "varName": "FirstMess", "name": "Delete Message" },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ":x:This bank server does not exist!",
+        "storage": "1",
+        "varName2": "Error2",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "10", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Error2", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "behavior": "0",
+        "interpretation": "0",
+        "code": "var str = tempVars(\"EmoteParam\");\nstr.replace(/a|A|b|B|c|C|d|D|e|E|f|F|g|G|h|H|i|I|j|J|k|K|l|L|m|M|n|N|o|O|p|P|q|Q|r|R|s|S|t|T|u|U|v|V|w|W|x|X|y|Y|z|Z|:|<|>/g,'');",
+        "storage": "1",
+        "varName": "Text",
+        "name": "Run Script"
+      },
+      {
+        "behavior": "0",
+        "interpretation": "0",
+        "code": "var str = tempVars(\"EmoteParam\");\nstr.replace(/1|2|3|4|5|6|7|8|9|0|:|<|>/g,'');",
+        "storage": "1",
+        "varName": "Number",
+        "name": "Run Script"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"Number\")}",
+        "storage": "1",
+        "varName": "EmojiN",
+        "name": "Find Custom Emoji"
+      },
+      {
+        "storage": "1",
+        "varName": "EmojiN",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "5",
+        "name": "Check Variable"
+      },
+      { "storage": "1", "varName": "FirstMess", "name": "Delete Message" },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ":x:I already have this emote!",
+        "storage": "1",
+        "varName2": "Error3",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "10", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Error3", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "url": "https://cdn.discordapp.com/emojis/${tempVars(\"Text\")}.png",
+        "storage": "1",
+        "varName": "Image",
+        "name": "Create Image"
+      },
+      {
+        "storage": "1",
+        "varName": "Image",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "3",
+        "iftrueVal": "4",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "url": "https://cdn.discordapp.com/emojis/${tempVars(\"Text\")}.jpg",
+        "storage": "1",
+        "varName": "Image",
+        "name": "Create Image"
+      },
+      {
+        "storage": "1",
+        "varName": "Image",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "url": "https://cdn.discordapp.com/emojis/${tempVars(\"Text\")}.gif",
+        "storage": "1",
+        "varName": "Image",
+        "name": "Create Image"
+      },
+      {
+        "storage": "1",
+        "varName": "Image",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "2",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      { "storage": "1", "varName": "FirstMess", "name": "Delete Message" },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ":white_check_mark:Sent",
+        "storage": "1",
+        "varName2": "SentMess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "server": "1", "varName": "BankServer", "name": "Change Server" },
+      {
+        "emojiName": "${tempVars(\"Number\")}",
+        "storage": "1",
+        "varName": "Image",
+        "storage2": "0",
+        "varName2": "",
+        "name": "Create Emoji"
+      },
+      { "time": "10", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "SentMess", "name": "Delete Message" }
+    ],
+    "_aliases": ["Gift"],
+    "comType": "0"
+  },
+  {
+    "name": "Join",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "zxmiZ",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ServerName",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "2",
+        "storage": "1",
+        "varName2": "HubName",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerName",
+        "comparison": "1",
+        "value": "tempVars(\"HubName\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "VCN",
+        "name": "Store Voice Channel Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "CatName",
+        "name": "Store Channel Info"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"CatName\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "info": "1",
+        "find": "${tempVars(\"VCN\")}",
+        "storage": "1",
+        "varName": "NVC",
+        "name": "Find Voice Channel"
+      },
+      { "channel": "3", "varName": "NVC", "name": "Join Voice Channel" }
+    ]
+  },
+  {
+    "name": "Leave",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "jFHpD",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ServerName",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "2",
+        "storage": "1",
+        "varName2": "HubName",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerName",
+        "comparison": "1",
+        "value": "tempVars(\"HubName\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      { "name": "Leave Voice Channel" }
+    ]
+  },
+  {
+    "name": "Stream",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "hhBvX",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "StreamMode",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "StreamSwitch",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "StreamMode",
+        "comparison": "1",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "5",
+        "name": "Check Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "StreamMode",
+        "changeType": "0",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Streamer Mode on",
+        "storage": "1",
+        "varName2": "Mess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "StreamMode",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "Streamer Mode off",
+        "storage": "1",
+        "varName2": "Mess2",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess2", "name": "Delete Message" },
+      { "name": "End Action Sequence" }
+    ],
+    "comType": "0"
+  },
+  {
+    "name": "Streaminfo",
+    "permissions": "NONE",
+    "restriction": "1",
+    "_id": "LhCRn",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "2",
+        "info2": "5",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "Live",
+        "name": "Store Twitch Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Live",
+        "conversion": "2",
+        "storage2": "1",
+        "varName2": "Bool",
+        "name": "Convert Variable"
+      },
+      {
+        "info": "0",
+        "find": "561171425747009536",
+        "storage": "1",
+        "varName": "Streamer",
+        "find2": "0",
+        "name": "Find Member"
+      },
+      {
+        "member": "2",
+        "varName": "Streamer",
+        "info": "3",
+        "storage": "1",
+        "varName2": "User",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "2",
+        "varName": "Streamer",
+        "info": "16",
+        "storage": "1",
+        "varName2": "UserPic",
+        "name": "Store Member Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Bool",
+        "comparison": "1",
+        "value": "false",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "13",
+        "name": "Check Variable"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "${tempVars(\"User\")} isn't even currently streaming...",
+        "storage": "1",
+        "varName2": "Mess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "15", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Mess", "name": "Delete Message" },
+      { "name": "End Action Sequence" },
+      {
+        "type": "0",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "2",
+        "info2": "6",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "ChannelName",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "0",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "8",
+        "info2": "6",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "ChannelView",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "0",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "9",
+        "info2": "6",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "ChannelFollow",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "0",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "6",
+        "info2": "6",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "ChannelPic",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "6",
+        "info2": "6",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "StreamName",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "6",
+        "info2": "7",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "StreamViews",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "6",
+        "info2": "8",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "StreamStart",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "5",
+        "info2": "0",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "StreamID",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "6",
+        "info2": "10",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "StreamPic",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "1",
+        "inputtype": "0",
+        "input": "460900127",
+        "info1": "6",
+        "info2": "3",
+        "info3": "3",
+        "info4": "0",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "StreamGame",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "3",
+        "inputtype": "0",
+        "input": "${tempVars(\"StreamGame\")}",
+        "info1": "6",
+        "info2": "3",
+        "info3": "3",
+        "info4": "1",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "GameName",
+        "name": "Store Twitch Info"
+      },
+      {
+        "type": "3",
+        "inputtype": "0",
+        "input": "${tempVars(\"StreamGame\")}",
+        "info1": "6",
+        "info2": "3",
+        "info3": "3",
+        "info4": "2",
+        "clientid": "oi918vnxg67oov8jhgttxwyk9cf4jn",
+        "results": "",
+        "storage": "1",
+        "varName": "GameArt",
+        "name": "Store Twitch Info"
+      },
+      {
+        "title": "${tempVars(\"StreamName\")} | ${tempVars(\"GameName\")} | Viewers: ${tempVars(\"StreamViews\")}",
+        "author": "${tempVars(\"ChannelName\")} | Followers: ${tempVars(\"ChannelFollow\")} | Views: ${tempVars(\"ChannelView\")}",
+        "color": "00FFFF",
+        "url": "https://www.twitch.tv/monochronium",
+        "authorIcon": "${tempVars(\"ChannelPic\")}",
+        "authorUrl": "https://www.twitch.tv/monochronium",
+        "imageUrl": "${tempVars(\"StreamPic\")}",
+        "thumbUrl": "${tempVars(\"GameArt\")}",
+        "timestamp": "false",
+        "debug": "false",
+        "text": "",
+        "year": "",
+        "month": "",
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "second": "",
+        "storage": "1",
+        "varName": "Embed",
+        "name": "Create Embed Message"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "${tempVars(\"User\")}\nis streaming ${tempVars(\"GameName\")}, go watch it!",
+        "name": "Set Embed Description"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "stream started at: ${tempVars(\"StreamStart\")} | Stream ID: ${tempVars(\"StreamID\")}",
+        "footerIcon": "${tempVars(\"UserPic\")}",
+        "name": "Set Embed Footer"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "channel": "0",
+        "varName2": "",
+        "storage3": "1",
+        "varName3": "Del",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Embed Message"
+      },
+      { "time": "45", "measurement": "1", "name": "Wait" },
+      { "storage": "1", "varName": "Del", "name": "Delete Message" }
+    ],
+    "comType": "0"
+  },
+  {
+    "name": "Reset",
+    "permissions": "NONE",
+    "restriction": "1",
+    "_id": "mxbLw",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Sync",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Syncoff",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "StreamMode",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Streamoff",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Sync",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "StreamMode",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "All values reset",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      }
+    ]
+  },
+  {
+    "name": "Initiate",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "mdDZB",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      {
+        "server": "0",
+        "varName": "",
+        "storage": "1",
+        "varName2": "BotMember",
+        "name": "Get Bot as Member"
+      },
+      {
+        "member": "2",
+        "varName": "BotMember",
+        "permission": "MANAGE_MESSAGES",
+        "iftrue": "0",
+        "iftrueVal": "2",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Member Permissions"
+      },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "0",
+        "varName": "ServerID",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ServerName",
+        "name": "Store Server Info"
+      },
+      {
+        "channel": "0",
+        "varName": "ChannelID",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChannelName",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "0",
+        "varName": "ChannelID",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ChannelID",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "3",
+        "storage": "1",
+        "varName2": "ChannelTopic",
+        "name": "Store Channel Info"
+      },
+      { "server": "3", "varName": "Hub", "name": "Change Server" },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ServerName\")}",
+        "storage": "1",
+        "varName": "Cat",
+        "name": "Find Category"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "0",
+        "storage": "1",
+        "varName2": "CatID",
+        "name": "Store Category Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Cat",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "12",
+        "iffalse": "3",
+        "iffalseVal": "12",
+        "name": "Check Variable"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "9",
+        "storage": "1",
+        "varName2": "CatSize",
+        "name": "Store Category Info"
+      },
+      {
+        "storage": "1",
+        "varName": "CatSize",
+        "comparison": "0",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "11",
+        "iffalse": "3",
+        "iffalseVal": "10",
+        "name": "Check Variable"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "8",
+        "storage": "1",
+        "varName2": "Catlist",
+        "name": "Store Category Info"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Cat",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Cat",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Cat",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "list": "7",
+        "varName": "Catlist",
+        "getType": "3",
+        "position": "${tempVars(\"Numbers\")}",
+        "storage": "1",
+        "varName2": "Get",
+        "name": "Get Item from List"
+      },
+      {
+        "channel": "3",
+        "varName": "Get",
+        "info": "2",
+        "storage": "1",
+        "varName2": "CurrentName",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "CurrentName",
+        "comparison": "1",
+        "value": "tempVars(\"ChannelName\")",
+        "iftrue": "3",
+        "iftrueVal": "1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Cat",
+        "comparison": "1",
+        "value": "tempVars(\"CatSize\")",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "2",
+        "iffalseVal": "17",
+        "name": "Check Server Data"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ":x:This channel has already been initiated!",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ":hourglass_flowing_sand:Syncing channel.",
+        "storage": "1",
+        "varName2": "Mess",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      {
+        "storage": "1",
+        "varName": "Mess",
+        "message": ":hourglass:Syncing channel..",
+        "storage2": "1",
+        "varName2": "",
+        "name": "Edit Message"
+      },
+      {
+        "storage": "1",
+        "varName": "Cat",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "3",
+        "iftrueVal": "4",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "channelName": "${tempVars(\"ServerName\")}",
+        "position": "",
+        "storage": "1",
+        "varName": "Category",
+        "name": "Create Category Channel"
+      },
+      {
+        "category": "1",
+        "varName": "Category",
+        "info": "0",
+        "storage": "1",
+        "varName2": "CategoryID",
+        "name": "Store Category Info"
+      },
+      {
+        "channelName": "${tempVars(\"ChannelName\")}",
+        "categoryID": "${tempVars(\"CategoryID\")}",
+        "topic": "",
+        "position": "1",
+        "storage": "1",
+        "varName": "NewChannel",
+        "name": "Create Text Channel"
+      },
+      { "count": "1", "name": "Skip Actions" },
+      {
+        "channelName": "${tempVars(\"ChannelName\")}",
+        "categoryID": "${tempVars(\"CatID\")}",
+        "topic": "",
+        "position": "1",
+        "storage": "1",
+        "varName": "NewChannel",
+        "name": "Create Text Channel"
+      },
+      {
+        "storage": "1",
+        "varName": "ChannelTopic",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "3",
+        "varName": "NewChannel",
+        "channelType": "0",
+        "toChange": "1",
+        "newState": "${tempVars(\"ChannelTopic\")}",
+        "name": "Edit Channel"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      {
+        "storage": "1",
+        "varName": "Mess",
+        "message": ":cyclone:Syncing channel...",
+        "storage2": "1",
+        "varName2": "",
+        "name": "Edit Message"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      {
+        "storage": "1",
+        "varName": "Mess",
+        "message": ":white_check_mark:Done",
+        "storage2": "1",
+        "varName2": "",
+        "name": "Edit Message"
+      }
+    ],
+    "comType": "0"
+  },
+  {
+    "name": "Default",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "OMHBZ",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      { "status": "0", "name": "Set Bot Status" },
+      {
+        "gameName": "around on discord",
+        "gameLink": "",
+        "name": "Set Bot Game"
+      },
+      { "username": "Doppelganger", "name": "Set Bot Username" },
+      {
+        "url": "resources/pic.jpg",
+        "storage": "1",
+        "varName": "Avatar",
+        "name": "Create Image"
+      },
+      { "storage": "1", "varName": "Avatar", "name": "Set Bot Avatar" }
+    ]
+  },
+  {
+    "name": "End",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "RuzpF",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      { "name": "Stop Bot" }
+    ],
+    "comType": "0",
+    "_aliases": ["Die"]
+  },
+  {
+    "name": "DM",
+    "permissions": "NONE",
+    "restriction": "3",
+    "_id": "RNczj",
+    "actions": [
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "comparison": "1",
+        "value": "1",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Server Data"
+      },
+      {
+        "info": "1",
+        "infoIndex": "0",
+        "storage": "1",
+        "varName": "Mess",
+        "name": "Store Command Params"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "0",
+        "storage": "1",
+        "varName2": "Member",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "2",
+        "varName": "Member",
+        "info": "1",
+        "storage": "1",
+        "varName2": "MemberID",
+        "name": "Store Member Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Mess",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "9",
+        "name": "Check Variable"
+      },
+      { "storage": "1", "varName": "TheList", "name": "Create List" },
+      {
+        "storage": "1",
+        "varName": "Mess",
+        "loop": "0",
+        "storage2": "1",
+        "varName2": "LoopOn",
+        "name": "Loop Start"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"LoopOn\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "EndParam",
+        "name": "Store Message Params"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "5",
+        "value": ":",
+        "iftrue": "0",
+        "iftrueVal": "1",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "TheList",
+        "addType": "0",
+        "position": "",
+        "value": "tempVars(\"EndParam\")",
+        "name": "Add Item to List"
+      },
+      { "storage": "1", "varName": "LoopOn", "name": "Loop End" },
+      {
+        "list": "7",
+        "varName": "TheList",
+        "getType": "0",
+        "position": "",
+        "storage": "1",
+        "varName2": "Get",
+        "name": "Get Item from List"
+      },
+      {
+        "text": "${tempVars(\"Get\")}",
+        "text2": ":",
+        "text3": "",
+        "info": "1",
+        "storage": "1",
+        "varName": "Replaced",
+        "name": "Replace Text"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"Replaced\")}",
+        "storage": "1",
+        "varName": "Emote",
+        "name": "Find Custom Emoji"
+      },
+      { "server": "3", "varName": "Hub", "name": "Change Server" },
+      {
+        "text": "${msg.author.username.toLowerCase()}",
+        "text2": " ",
+        "text3": "-",
+        "info": "1",
+        "storage": "1",
+        "varName": "ReplacedName",
+        "name": "Replace Text"
+      },
+      {
+        "info": "1",
+        "find": "Direct Messages",
+        "storage": "1",
+        "varName": "Cat",
+        "name": "Find Category"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "1",
+        "storage": "1",
+        "varName2": "CatNam",
+        "name": "Store Category Info"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "0",
+        "storage": "1",
+        "varName2": "CategoryID",
+        "name": "Store Category Info"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ReplacedName\")}",
+        "storage": "1",
+        "varName": "ChanName",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "3",
+        "varName": "ChanName",
+        "info": "10",
+        "storage": "1",
+        "varName2": "CatName",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "CatName",
+        "comparison": "1",
+        "value": "tempVars(\"CatNam\")",
+        "iftrue": "3",
+        "iftrueVal": "3",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "channelName": "${msg.author.username}",
+        "categoryID": "${tempVars(\"CategoryID\")}",
+        "topic": "",
+        "position": "",
+        "storage": "1",
+        "varName": "ChanName",
+        "name": "Create Text Channel"
+      },
+      {
+        "storage": "3",
+        "varName": "ChanName",
+        "channelType": "0",
+        "toChange": "1",
+        "newState": "${msg.author.id}",
+        "name": "Edit Channel"
+      },
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "18",
+        "storage": "1",
+        "varName2": "Attach",
+        "name": "Store Message Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Attach",
+        "comparison": "4",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "6",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "0",
+        "storage2": "1",
+        "varName2": "URL",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "4",
+        "storage2": "1",
+        "varName2": "Content",
+        "name": "Store Attachment Info"
+      },
+      {
+        "title": "${msg.author.username}:",
+        "author": "${msg.author.tag} | Status: ${msg.author.presence.status} | ID: ${tempVars(\"MemberID\")}",
+        "color": "FF00FF",
+        "url": "",
+        "authorIcon": "${msg.author.displayAvatarURL}",
+        "authorUrl": "",
+        "imageUrl": "${tempVars(\"URL\")}",
+        "thumbUrl": "",
+        "timestamp": "true",
+        "text": "",
+        "year": "",
+        "month": "",
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "second": "",
+        "storage": "1",
+        "varName": "Embed",
+        "name": "Create Embed Message"
+      },
+      {
+        "storage": "1",
+        "varName": "Content",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "${tempVars(\"Content\")}",
+        "name": "Set Embed Description"
+      },
+      { "count": "2", "name": "Skip Actions" },
+      {
+        "title": "${msg.author.username}:",
+        "author": "${msg.author.tag} | Status: ${msg.author.presence.status} | ID: ${tempVars(\"MemberID\")}",
+        "color": "FF00FF",
+        "url": "",
+        "authorIcon": "${msg.author.displayAvatarURL}",
+        "authorUrl": "",
+        "imageUrl": "",
+        "thumbUrl": "",
+        "timestamp": "true",
+        "debug": "false",
+        "text": "",
+        "year": "",
+        "month": "",
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "second": "",
+        "storage": "1",
+        "varName": "Embed",
+        "name": "Create Embed Message"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "${tempVars(\"Mess\")}",
+        "name": "Set Embed Description"
+      },
+      {
+        "storage": "1",
+        "varName": "Emote",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "channel": "5",
+        "varName2": "ChanName",
+        "storage3": "0",
+        "varName3": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "messageContent": "${tempVars(\"Emote\")}",
+        "name": "Send Embed Message MOD"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "channel": "5",
+        "varName2": "ChanName",
+        "storage3": "0",
+        "varName3": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "messageContent": "",
+        "name": "Send Embed Message MOD"
+      }
+    ],
+    "comType": "3",
+    "_aliases": []
+  },
+  {
+    "name": "Message",
+    "temp": "",
+    "event-type": "0",
+    "_id": "Ljpyw",
+    "actions": [
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "RelaySwitch",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "dataName": "Relay",
+        "comparison": "1",
+        "value": "1",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ServerName",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "infoIndex": "0",
+        "storage": "1",
+        "varName": "Words",
+        "name": "Store Command Params"
+      },
+      {
+        "storage": "1",
+        "varName": "Words",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "11",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "FirstNumber": "${tempVars(\"Numbers\")}",
+        "info": "1",
+        "SecondNumber": "1",
+        "storage": "1",
+        "varName": "Minus",
+        "name": "Basic Math Operation"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"Minus\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "StartParam",
+        "name": "Store Message Params"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"Numbers\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "EndParam",
+        "name": "Store Message Params"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "1",
+        "value": "tempVars(\"StartParam\")",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "5",
+        "value": ":",
+        "iftrue": "3",
+        "iftrueVal": "1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "comparison": "1",
+        "value": "999999",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "10",
+        "name": "Check Server Data"
+      },
+      {
+        "text": "${tempVars(\"EndParam\")}",
+        "text2": ":",
+        "text3": "",
+        "info": "1",
+        "storage": "1",
+        "varName": "Replaced",
+        "name": "Replace Text"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"Replaced\")}",
+        "storage": "1",
+        "varName": "Emote",
+        "name": "Find Custom Emoji"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "3",
+        "storage": "1",
+        "varName2": "Nickname",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ID",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "4",
+        "storage": "1",
+        "varName2": "Color",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "18",
+        "storage": "1",
+        "varName2": "FullName",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "12",
+        "storage": "1",
+        "varName2": "Avatar",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "11",
+        "storage": "1",
+        "varName2": "Status",
+        "name": "Store Member Info"
+      },
+      {
+        "member": "1",
+        "varName": "",
+        "info": "7",
+        "storage": "1",
+        "varName2": "Roles",
+        "name": "Store Member Info"
+      },
+      {
+        "role": "3",
+        "varName": "Roles",
+        "info": "2",
+        "storage": "1",
+        "varName2": "RoleName",
+        "name": "Store Role Info"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChannelName",
+        "name": "Store Channel Info"
+      },
+      { "server": "3", "varName": "Hub", "name": "Change Server" },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ServerName\")}",
+        "storage": "1",
+        "varName": "Cat",
+        "name": "Find Category"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "8",
+        "storage": "1",
+        "varName2": "Catlist",
+        "name": "Store Category Info"
+      },
+      { "storage": "1", "varName": "List", "name": "Create List" },
+      {
+        "storage": "1",
+        "varName": "Catlist",
+        "loop": "0",
+        "storage2": "1",
+        "varName2": "LoopOn",
+        "name": "Loop Start"
+      },
+      {
+        "list": "7",
+        "varName": "Catlist",
+        "getType": "3",
+        "position": "${tempVars(\"LoopOn\")}",
+        "storage": "1",
+        "varName2": "Target",
+        "name": "Get Item from List"
+      },
+      {
+        "channel": "3",
+        "varName": "Target",
+        "info": "2",
+        "storage": "1",
+        "varName2": "TargetName",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "List",
+        "addType": "0",
+        "position": "",
+        "value": "tempVars(\"TargetName\")",
+        "name": "Add Item to List"
+      },
+      { "storage": "1", "varName": "LoopOn", "name": "Loop End" },
+      {
+        "list": "7",
+        "varName": "List",
+        "item": "${tempVars(\"ChannelName\")}",
+        "storage": "1",
+        "varName2": "NewChannel",
+        "name": "Find Item in List"
+      },
+      {
+        "list": "7",
+        "varName": "Catlist",
+        "getType": "3",
+        "position": "${tempVars(\"NewChannel\")}",
+        "storage": "1",
+        "varName2": "Finale",
+        "name": "Get Item from List"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "18",
+        "storage": "1",
+        "varName2": "Attach",
+        "name": "Store Message Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Attach",
+        "comparison": "4",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "6",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "0",
+        "storage2": "1",
+        "varName2": "URL",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "4",
+        "storage2": "1",
+        "varName2": "Content",
+        "name": "Store Attachment Info"
+      },
+      {
+        "title": "${member.displayName}:",
+        "author": "${msg.author.tag} | Status: ${msg.author.presence.status} | ID: ${msg.author.id}",
+        "color": "${tempVars(\"Color\")}",
+        "url": "",
+        "authorIcon": "${msg.author.displayAvatarURL}",
+        "authorUrl": "${msg.author.displayAvatarURL}",
+        "imageUrl": "${tempVars(\"URL\")}",
+        "thumbUrl": "",
+        "timestamp": "true",
+        "text": "",
+        "year": "",
+        "month": "",
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "second": "",
+        "storage": "1",
+        "varName": "Embed",
+        "name": "Create Embed Message"
+      },
+      {
+        "storage": "1",
+        "varName": "Content",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "1",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "${tempVars(\"Content\")}",
+        "name": "Set Embed Description"
+      },
+      { "count": "2", "name": "Skip Actions" },
+      {
+        "title": "${member.displayName}:",
+        "author": "${msg.author.tag} | Status: ${msg.author.presence.status} | ID: ${msg.author.id}",
+        "color": "${tempVars(\"Color\")}",
+        "url": "",
+        "authorIcon": "${msg.author.displayAvatarURL}",
+        "authorUrl": "${msg.author.displayAvatarURL}",
+        "imageUrl": "",
+        "thumbUrl": "",
+        "timestamp": "true",
+        "text": "",
+        "year": "",
+        "month": "",
+        "day": "",
+        "hour": "",
+        "minute": "",
+        "second": "",
+        "storage": "1",
+        "varName": "Embed",
+        "name": "Create Embed Message"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "${tempVars(\"Words\")}",
+        "name": "Set Embed Description"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "message": "Role: ${tempVars(\"RoleName\")}",
+        "footerIcon": "",
+        "name": "Set Embed Footer"
+      },
+      {
+        "storage": "1",
+        "varName": "Emote",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "channel": "5",
+        "varName2": "Finale",
+        "storage3": "0",
+        "varName3": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "messageContent": "${tempVars(\"Emote\")}",
+        "name": "Send Embed Message MOD"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "storage": "1",
+        "varName": "Embed",
+        "channel": "5",
+        "varName2": "Finale",
+        "storage3": "0",
+        "varName3": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "messageContent": "",
+        "name": "Send Embed Message MOD"
+      }
+    ],
+    "comType": "3",
+    "restriction": "1",
+    "permissions": "NONE"
+  },
+  {
+    "name": "Send",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "XdpVq",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChannelName",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "ChannelCat",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ChannelCat",
+        "comparison": "1",
+        "value": "Direct Messages",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "infoIndex": "0",
+        "storage": "1",
+        "varName": "Text",
+        "name": "Store Command Params"
+      },
+      {
+        "storage": "1",
+        "varName": "Text",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "12",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "FirstNumber": "${tempVars(\"Numbers\")}",
+        "info": "1",
+        "SecondNumber": "1",
+        "storage": "1",
+        "varName": "Minus",
+        "name": "Basic Math Operation"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"Minus\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "StartParam",
+        "name": "Store Message Params"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"Numbers\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "EndParam",
+        "name": "Store Message Params"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "1",
+        "value": "tempVars(\"StartParam\")",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "5",
+        "value": ":",
+        "iftrue": "3",
+        "iftrueVal": "1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "comparison": "1",
+        "value": "999999",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "10",
+        "name": "Check Server Data"
+      },
+      {
+        "text": "${tempVars(\"EndParam\")}",
+        "text2": ":",
+        "text3": "",
+        "info": "1",
+        "storage": "1",
+        "varName": "Replaced",
+        "name": "Replace Text"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"Replaced\")}",
+        "storage": "1",
+        "varName": "Emote",
+        "name": "Find Custom Emoji"
+      },
+      {
+        "text": "${tempVars(\"Text\")}",
+        "text2": "${tempVars(\"EndParam\")}",
+        "text3": "${tempVars(\"Emote\")}",
+        "info": "1",
+        "storage": "1",
+        "varName": "EmoteReplaced",
+        "name": "Replace Text"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChannelCat\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChannelName\")}",
+        "storage": "1",
+        "varName": "NewChannel",
+        "name": "Find Channel"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "18",
+        "storage": "1",
+        "varName2": "Attach",
+        "name": "Store Message Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Attach",
+        "comparison": "4",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "19",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "0",
+        "storage2": "1",
+        "varName2": "URL",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "1",
+        "varName": "URL",
+        "comparison": "5",
+        "value": "gif",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "url": "${tempVars(\"URL\")}",
+        "storage": "1",
+        "varName": "Screenshot",
+        "name": "Create Image"
+      },
+      { "count": "1", "name": "Skip Actions" },
+      {
+        "url": "${tempVars(\"URL\")}",
+        "storage": "1",
+        "varName": "Screenshot",
+        "name": "Create GIF"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "4",
+        "storage2": "1",
+        "varName2": "Content",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Content",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "5",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "URL",
+        "comparison": "5",
+        "value": "gif",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "NewChannel",
+        "message": "${tempVars(\"Content\")}",
+        "name": "Send Image"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ">>> ${tempVars(\"Content\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "count": "2", "name": "Skip Actions" },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "NewChannel",
+        "message": "${tempVars(\"Content\")}",
+        "name": "Send GIF"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": ">>> ${tempVars(\"Content\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "storage": "1",
+        "varName": "URL",
+        "comparison": "5",
+        "value": "gif",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "NewChannel",
+        "message": "",
+        "name": "Send Image"
+      },
+      { "count": "1", "name": "Skip Actions" },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "NewChannel",
+        "message": "",
+        "name": "Send GIF"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "storage": "1",
+        "varName": "Text",
+        "comparison": "5",
+        "value": ":",
+        "iftrue": "3",
+        "iftrueVal": "3",
+        "iffalse": "0",
+        "iffalseVal": "1",
+        "name": "Check Variable"
+      },
+      {
+        "channel": "0",
+        "varName": "NewChannel",
+        "message": "> ${tempVars(\"Text\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "channel": "5",
+        "varName": "NewChannel",
+        "message": "${tempVars(\"Text\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "channel": "0",
+        "varName": "NewChannel",
+        "message": "> ${tempVars(\"EmoteReplaced\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "channel": "5",
+        "varName": "NewChannel",
+        "message": "${tempVars(\"EmoteReplaced\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      }
+    ],
+    "comType": "3"
+  },
+  {
+    "name": "SendDM",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "bhAXh",
+    "actions": [
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "CatName",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "CatName",
+        "comparison": "1",
+        "value": "Direct Messages",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "infoIndex": "0",
+        "storage": "1",
+        "varName": "Text",
+        "name": "Store Command Params"
+      },
+      {
+        "storage": "1",
+        "varName": "Text",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "12",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "FirstNumber": "${tempVars(\"Numbers\")}",
+        "info": "1",
+        "SecondNumber": "1",
+        "storage": "1",
+        "varName": "Minus",
+        "name": "Basic Math Operation"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"Minus\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "StartParam",
+        "name": "Store Message Params"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "0",
+        "ParamN": "${tempVars(\"Numbers\")}",
+        "separator": "",
+        "storage": "1",
+        "varName2": "EndParam",
+        "name": "Store Message Params"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "1",
+        "value": "tempVars(\"StartParam\")",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "EndParam",
+        "comparison": "5",
+        "value": ":",
+        "iftrue": "3",
+        "iftrueVal": "1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": ":Emote:",
+        "comparison": "1",
+        "value": "999999",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "9",
+        "name": "Check Server Data"
+      },
+      {
+        "text": "${tempVars(\"EndParam\")}",
+        "text2": ":",
+        "text3": "",
+        "info": "1",
+        "storage": "1",
+        "varName": "Replaced",
+        "name": "Replace Text"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"Replaced\")}",
+        "storage": "1",
+        "varName": "Emote",
+        "name": "Find Custom Emoji"
+      },
+      {
+        "text": "${tempVars(\"Text\")}",
+        "text2": "${tempVars(\"EndParam\")}",
+        "text3": "${tempVars(\"Emote\")}",
+        "info": "1",
+        "storage": "1",
+        "varName": "EmoteReplaced",
+        "name": "Replace Text"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "info": "3",
+        "storage": "1",
+        "varName2": "ID",
+        "name": "Store Channel Info"
+      },
+      {
+        "info": "0",
+        "find": "${tempVars(\"ID\")}",
+        "storage": "1",
+        "varName": "MemberID",
+        "find2": "1",
+        "name": "Find Member"
+      },
+      {
+        "message": "0",
+        "varName": "",
+        "info": "18",
+        "storage": "1",
+        "varName2": "Attach",
+        "name": "Store Message Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Attach",
+        "comparison": "4",
+        "value": "0",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "19",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "0",
+        "storage2": "1",
+        "varName2": "URL",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "1",
+        "varName": "URL",
+        "comparison": "5",
+        "value": "gif",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "url": "${tempVars(\"URL\")}",
+        "storage": "1",
+        "varName": "Screenshot",
+        "name": "Create Image"
+      },
+      { "count": "1", "name": "Skip Actions" },
+      {
+        "url": "${tempVars(\"URL\")}",
+        "storage": "1",
+        "varName": "Screenshot",
+        "name": "Create GIF"
+      },
+      {
+        "storage": "0",
+        "varName": "",
+        "info": "4",
+        "storage2": "1",
+        "varName2": "Content",
+        "name": "Store Attachment Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Content",
+        "comparison": "0",
+        "value": "",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "3",
+        "iffalseVal": "5",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "URL",
+        "comparison": "5",
+        "value": "gif",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "MemberID",
+        "message": "${tempVars(\"Content\")}",
+        "name": "Send Image"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "${tempVars(\"Content\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "count": "2", "name": "Skip Actions" },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "MemberID",
+        "message": "${tempVars(\"Content\")}",
+        "name": "Send GIF"
+      },
+      {
+        "channel": "0",
+        "varName": "",
+        "message": "${tempVars(\"Content\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "storage": "1",
+        "varName": "URL",
+        "comparison": "5",
+        "value": "gif",
+        "iftrue": "3",
+        "iftrueVal": "2",
+        "iffalse": "0",
+        "iffalseVal": "2",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "MemberID",
+        "message": "",
+        "name": "Send Image"
+      },
+      { "count": "1", "name": "Skip Actions" },
+      {
+        "storage": "1",
+        "varName": "Screenshot",
+        "channel": "5",
+        "varName2": "MemberID",
+        "message": "",
+        "name": "Send GIF"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "storage": "1",
+        "varName": "Text",
+        "comparison": "5",
+        "value": ":",
+        "iftrue": "3",
+        "iftrueVal": "3",
+        "iffalse": "0",
+        "iffalseVal": "1",
+        "name": "Check Variable"
+      },
+      {
+        "channel": "0",
+        "varName": "NewChannel",
+        "message": "> ${tempVars(\"Text\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "channel": "5",
+        "varName": "MemberID",
+        "message": "${tempVars(\"Text\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      { "name": "End Action Sequence" },
+      {
+        "channel": "0",
+        "varName": "NewChannel",
+        "message": "> ${tempVars(\"EmoteReplaced\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "channel": "5",
+        "varName": "MemberID",
+        "message": "${tempVars(\"EmoteReplaced\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      }
+    ],
+    "comType": "3"
+  },
+  {
+    "name": "Members",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "yaoLD",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "0",
+        "find": "628029356996034581",
+        "storage": "1",
+        "varName": "MemberChan",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChannelName",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "ChannelCat",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ChannelCat",
+        "comparison": "1",
+        "value": "Direct Messages",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChannelCat\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      {
+        "server": "1",
+        "varName": "Server",
+        "dataName": "MemNumber",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "MemNumber",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "MemNumber",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "list": "0",
+        "varName": "",
+        "getType": "3",
+        "position": "${tempVars(\"Numbers\")}",
+        "storage": "1",
+        "varName2": "Get",
+        "name": "Get Item from List"
+      },
+      {
+        "member": "2",
+        "varName": "Get",
+        "info": "3",
+        "storage": "1",
+        "varName2": "Display",
+        "name": "Store Member Info"
+      },
+      {
+        "storage": "1",
+        "varName": "Display",
+        "comparison": "1",
+        "value": "Doppelganger",
+        "iftrue": "3",
+        "iftrueVal": "1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "channel": "5",
+        "varName": "MemberChan",
+        "message": "${tempVars(\"Display\")} | ${tempVars(\"Get\").user.tag} | ${tempVars(\"Get\").user.id}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "info": "36",
+        "storage": "1",
+        "varName2": "MemCount",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "MemNumber",
+        "comparison": "1",
+        "value": "tempVars(\"MemCount\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "14",
+        "name": "Check Server Data"
+      }
+    ],
+    "comType": "0",
+    "_aliases": ["Mem"]
+  },
+  {
+    "name": "Emotes",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "OsXeb",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "0",
+        "find": "628050943442681856",
+        "storage": "1",
+        "varName": "MemberChan",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChannelName",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "ChannelCat",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ChannelCat",
+        "comparison": "1",
+        "value": "Direct Messages",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChannelCat\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      {
+        "server": "1",
+        "varName": "Server",
+        "dataName": "EmoNumber",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "EmoNumber",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "EmoNumber",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "list": "3",
+        "varName": "",
+        "getType": "3",
+        "position": "${tempVars(\"Numbers\")}",
+        "storage": "1",
+        "varName2": "Get",
+        "name": "Get Item from List"
+      },
+      {
+        "channel": "5",
+        "varName": "MemberChan",
+        "message": "${tempVars(\"Get\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "info": "24",
+        "storage": "1",
+        "varName2": "MemCount",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "EmoNumber",
+        "comparison": "1",
+        "value": "tempVars(\"MemCount\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "14",
+        "name": "Check Server Data"
+      }
+    ],
+    "comType": "0",
+    "_aliases": ["Emo"]
+  },
+  {
+    "name": "Channels",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "weBtH",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "0",
+        "find": "628088855853137931",
+        "storage": "1",
+        "varName": "MemberChan",
+        "name": "Find Channel"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChannelName",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "1",
+        "varName": "",
+        "info": "10",
+        "storage": "1",
+        "varName2": "ChannelCat",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ChannelCat",
+        "comparison": "1",
+        "value": "Direct Messages",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "find": "${tempVars(\"ChannelCat\")}",
+        "storage": "1",
+        "varName": "Server",
+        "name": "Find Server"
+      },
+      {
+        "server": "1",
+        "varName": "Server",
+        "dataName": "ChanNumber",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      { "server": "1", "varName": "Server", "name": "Change Server" },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "ChanNumber",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "ChanNumber",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "list": "1",
+        "varName": "",
+        "getType": "3",
+        "position": "${tempVars(\"Numbers\")}",
+        "storage": "1",
+        "varName2": "Get",
+        "name": "Get Item from List"
+      },
+      {
+        "channel": "3",
+        "varName": "Get",
+        "info": "2",
+        "storage": "1",
+        "varName2": "Name",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "3",
+        "varName": "Get",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ID",
+        "name": "Store Channel Info"
+      },
+      {
+        "channel": "5",
+        "varName": "MemberChan",
+        "message": "${tempVars(\"Name\")} | ${tempVars(\"ID\")}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "info": "23",
+        "storage": "1",
+        "varName2": "MemCount",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "ChanNumber",
+        "comparison": "1",
+        "value": "tempVars(\"MemCount\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "14",
+        "name": "Check Server Data"
+      }
+    ],
+    "comType": "0",
+    "_aliases": ["Chan"]
+  },
+  {
+    "name": "Test",
+    "permissions": "NONE",
+    "restriction": "4",
+    "_id": "DSmtW",
+    "actions": [
+      {
+        "info": "1",
+        "find": "Server",
+        "storage": "1",
+        "varName": "Cat",
+        "name": "Find Category"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "8",
+        "storage": "1",
+        "varName2": "Catlist",
+        "name": "Store Category Info"
+      },
+      {
+        "category": "1",
+        "varName": "Cat",
+        "info": "9",
+        "storage": "1",
+        "varName2": "CatSize",
+        "name": "Store Category Info"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Number",
+        "changeType": "0",
+        "value": "0",
+        "name": "Control Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Number",
+        "defaultVal": "0",
+        "storage": "1",
+        "varName2": "Numbers",
+        "name": "Store Server Data"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Number",
+        "changeType": "1",
+        "value": "1",
+        "name": "Control Server Data"
+      },
+      {
+        "list": "7",
+        "varName": "Catlist",
+        "getType": "3",
+        "position": "${tempVars(\"Numbers\")}",
+        "storage": "1",
+        "varName2": "Get",
+        "name": "Get Item from List"
+      },
+      {
+        "channel": "3",
+        "varName": "Get",
+        "info": "2",
+        "storage": "1",
+        "varName2": "ChanNam",
+        "name": "Store Channel Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ChanNam",
+        "comparison": "1",
+        "value": "Name",
+        "iftrue": "3",
+        "iftrueVal": "1",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "server": "0",
+        "varName": "",
+        "dataName": "Number",
+        "comparison": "1",
+        "value": "tempVars(\"CatSize\")",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "2",
+        "iffalseVal": "6",
+        "name": "Check Server Data"
+      }
+    ],
+    "comType": "0"
+  },
+  {
+    "name": "MemberName",
+    "permissions": "NONE",
+    "restriction": "2",
+    "_id": "DSiyJ",
+    "actions": [
+      { "time": "1", "measurement": "1", "name": "Wait" },
+      { "storage": "0", "varName": "", "name": "Delete Message" },
+      {
+        "server": "0",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "ServerID",
+        "name": "Store Server Info"
+      },
+      {
+        "server": "3",
+        "varName": "Hub",
+        "info": "1",
+        "storage": "1",
+        "varName2": "HubID",
+        "name": "Store Server Info"
+      },
+      {
+        "storage": "1",
+        "varName": "ServerID",
+        "comparison": "1",
+        "value": "tempVars(\"HubID\")",
+        "iftrue": "0",
+        "iftrueVal": "",
+        "iffalse": "1",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "storage": "1",
+        "varName": "ChannelCat",
+        "comparison": "1",
+        "value": "Direct Messages",
+        "iftrue": "1",
+        "iftrueVal": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Check Variable"
+      },
+      {
+        "info": "1",
+        "infoIndex": "1",
+        "storage": "1",
+        "varName": "ID",
+        "name": "Store Command Params"
+      },
+      {
+        "info": "0",
+        "find": "${tempVars(\"ID\")}",
+        "storage": "1",
+        "varName": "MemberID",
+        "find2": "1",
+        "name": "Find Member"
+      },
+      {
+        "channel": "0",
+        "varName": "MemberChan",
+        "message": "${tempVars(\"MemberID\").displayName} | ${tempVars(\"MemberID\").tag}",
+        "storage": "0",
+        "varName2": "",
+        "iffalse": "0",
+        "iffalseVal": "",
+        "name": "Send Message"
+      }
+    ],
+    "comType": "0",
+    "_aliases": ["Memn"]
+  }
+]
